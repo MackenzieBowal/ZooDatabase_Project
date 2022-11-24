@@ -1,0 +1,14 @@
+import mysql.connector
+
+# Create a connection to the database
+mydb = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "password"
+)
+
+mycursor = mydb.cursor()
+
+# Create the zoo database
+mycursor.execute("DROP DATABASE IF EXISTS zoodatabase")
+mycursor.execute("CREATE DATABASE zoodatabase")
