@@ -1,22 +1,12 @@
-from Tkinter import *
+import tkinter as tk
 
-class GUI(Frame):
 
-    def __init__(self,master=None):
-        Frame.__init__(self, master)
-        self.grid()
+class Window(tk.Tk):
 
-        self.fnameLabel = Label(master, text="First Name")
-        self.fnameLabel.grid()
-
-        self.fnameEntry = Entry(master)
-        self.fnameEntry.grid()
-
-        self.lnameLabel = Label(master, text="Last Name")
-        self.lnameLabel.grid()
-
-        self.lnameEntry = Entry(master)
-        self.lnameEntry.grid()
+    def __init__(self):
+        super().__init__()
+        
+        self.welcomePage = Frame(self, )
 
         self.submitButton = Button(self.buttonClick, text="Submit")
         self.submitButton.grid()
@@ -24,9 +14,4 @@ class GUI(Frame):
 
     def buttonClick(self, event):
         """ handle button click event and output text from entry area"""
-        pass
-
-
-if __name__ == "__main__":
-    guiFrame = GUI()
-    guiFrame.mainloop()
+        print("buttonclicked")
