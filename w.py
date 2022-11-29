@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import ttk
-
+TK_SILENCE_DEPRECATION=1
 
 class App:
 
@@ -8,22 +8,25 @@ class App:
 
         self.window = window
 
-        self.welcomeFrame = Frame(window)
+        self.welcomeFrame = ttk.Frame(self.window)
 
         self.welcomeFrame.pack()
-        # configure the root window
-        self.frame2 = Frame(self)
-        self.frame2.title('My Awesome App')
-        self.frame2.geometry('300x50')
+        self.welcomeFrame.place(window)
 
         # label
-        self.label = ttk.Label(self, text='Hello, Tkinter!')
-        self.label.pack()
+        self.empButton = ttk.Button(self.welcomeFrame, text='Employee')
+        self.empButton.pack()
+        self.visButton = ttk.Button(self.welcomeFrame, text='Visitor')
+        self.visButton.pack()
+
+
 
         # button
-        self.button = ttk.Button(self, text='Click Me')
-        self.button['command'] = self.button_clicked
-        self.button.pack()
+        self.empButton['command'] = self.button_clicked
 
     def button_clicked(self):
-    
+        print("clicked!")
+
+win = tk.Tk()
+win.geometry("750x250")
+myApp = App(win)
