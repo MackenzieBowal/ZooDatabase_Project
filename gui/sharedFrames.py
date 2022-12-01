@@ -1,3 +1,4 @@
+from ctypes import alignment
 from tkinter import *
 from tkinter.ttk import Combobox
 
@@ -23,11 +24,12 @@ def setSpeciesFrame(sFrame):
     global speciesFrame
     speciesFrame = sFrame
 
-    text = Label(speciesFrame, text="Browse Species").grid(column = 3, row = 3)
+    text = Label(speciesFrame, text="Browse Species")
+    text.grid(column = 1, row = 0, sticky=S, ipadx=300, ipady=20)
     global speciesSelection
     currValue = StringVar()
-    speciesSelection = Combobox(speciesFrame, width = 27, textvariable = currValue)
-    speciesSelection.grid(column = 3, row = 5)
+    speciesSelection = Combobox(speciesFrame, width = 30, textvariable = currValue)
+    speciesSelection.grid(column = 1, row = 1, padx=300, pady=20, sticky=N+S+E+W)
 
     # This will be replaced by querying the database
     sNames = []
@@ -42,7 +44,6 @@ def setSpeciesFrame(sFrame):
     speciesSelection.bind('<<ComboboxSelected>>', showSpecies)
 
     # Create text for species info
-
     global spLabel
     global catLabel
     global habLabel
@@ -50,15 +51,14 @@ def setSpeciesFrame(sFrame):
     global dietLabel
 
     spLabel = Label(speciesFrame, text="Species: None selected")
-    spLabel.grid(column = 1, row = 1, padx=20, pady=20)
+    spLabel.grid(column = 1, row = 2, padx=300, pady=20, sticky=S+E+W)
     catLabel = Label(speciesFrame, text="Category: ")
-    catLabel.grid(column = 1, row = 2, padx=20, pady=20)
+    catLabel.grid(column = 1, row = 3, padx=300, pady=20, sticky=N+S+E+W)
     habLabel = Label(speciesFrame, text="Habitat: ")
-    habLabel.grid(column = 1, row = 3, padx=20, pady=20)
+    habLabel.grid(column = 1, row = 4, padx=300, pady=20, sticky=N+S+E+W)
     lifeLabel = Label(speciesFrame, text="Lifespan: ")
-    lifeLabel.grid(column = 1, row = 4, padx=20, pady=20)
+    lifeLabel.grid(column = 1, row = 5, padx=300, pady=20, sticky=N+S+E+W)
     dietLabel = Label(speciesFrame, text="Diet: ")
-    dietLabel.grid(column = 1, row = 5, padx=20, pady=20)
-    
+    dietLabel.grid(column = 1, row = 6, padx=300, pady=20, sticky=N+S+E+W)
 
     return

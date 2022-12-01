@@ -36,7 +36,6 @@ def handleVisitorPage(window, bFrame):
     speciesFrame.pack(fill='both', expand=True)
 
 
-
     visitorNotebook.add(frame1, text='Exhibits')
     visitorNotebook.add(frame2, text='Enclosures')
     visitorNotebook.add(speciesFrame, text='Species')
