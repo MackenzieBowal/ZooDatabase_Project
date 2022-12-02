@@ -11,6 +11,35 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
+mycursor.execute("INSERT INTO Species \
+                VALUES ('Lion', 'Feline', 'Savannah', 12), \
+                ('Buffalo', 'Bovine', 'Plains', 25), \
+                ('Platypus', 'Weird', 'Small Creeks', 7)")
+
+mycursor.execute("INSERT INTO Indoor_complex \
+                VALUES ('1', 5426, 'Zoo Boulevard'), \
+                ('2', 389, 'Zoo Avenue')")
+
+mycursor.execute("INSERT INTO Enclosure \
+                VALUES ('462736', 21, 'Plains', 40, 50, 20, 2), \
+                ('238849', -20, 'Antarctic', 20, 30, 20, '1'), \
+                ('171702', 25, 'Small Creeks', 40, 30, 10, '1'), \
+                ('350586', 28, 'Savannah', 50, 40, NULL, NULL)")
+
+mycursor.execute("INSERT INTO Exhibit \
+                VALUES ('8675309', '2022-11-18', '2022-12-18'), \
+                ('0951287', '2022-03-08', '2022-03-31'), \
+                ('3863048', '2013-05-16', '2013-07-24'), \
+                ('8324767', '2022-12-01', '2023-01-05'), \
+                ('9672122', '2022-11-29', '2022-12-10'), \
+                ('5432235', '2016-08-15', '2016-09-15'), \
+                ('6823527', '2019-12-02', '2020-03-14')")
+
+mycursor.execute("INSERT INTO Animal \
+                VALUES ('Rex', '2016-07-15', 'M', 'Lion', '350586', NULL), \
+                ('Fluffy', '2013-06-25', 'F', 'Buffalo', '462736', NULL), \
+                ('Buddy', NULL, 'M', 'Platypus', '171702', '8675309')")
+
 mycursor.execute("INSERT INTO Employee \
                 VALUES ('12345', 'Alice Anderson', '1 First Street', \
                 'alice2840@gmail.com', '4032370847', '2022-11-29'), \
@@ -23,21 +52,46 @@ mycursor.execute("INSERT INTO Employee \
                 ('56789', 'Ed Edwards', '5 Fifth Street', \
                 'ededed@gmail.com', '4032665740', '2021-03-15')")
 
-mycursor.execute("INSERT INTO Receptionist \
-                VALUES (12345)")
-
-mycursor.execute("INSERT INTO Entertainer \
-                VALUES (23456)")
-
-mycursor.execute("INSERT INTO Zookeeper \
-                VALUES (34567)")
-
 mycursor.execute("INSERT INTO Manager \
-                VALUES (45678)")
+                VALUES ('45678')")
 
 mycursor.execute("INSERT INTO Store \
-                VALUES ('Safari Eatery', 'Restaurant', 45678)")
+                VALUES ('Safari Eatery', 'Restaurant', '45678'), \
+                ('Jungle Fun', 'Souvenir Shop', '45678'), \
+                ('Coming Soon', NULL, '45678')")
+
+mycursor.execute("INSERT INTO Zookeeper \
+                VALUES ('34567')")
+
+mycursor.execute("INSERT INTO Entertainer \
+                VALUES ('23456')")
 
 mycursor.execute("INSERT INTO Other_employee \
-                VALUES (56789, 'Safari Eatery')")
-                
+                VALUES ('56789', 'Safari Eatery')")
+
+mycursor.execute("INSERT INTO Receptionist \
+                VALUES ('12345')")
+
+mycursor.execute("INSERT INTO Pass \
+                VALUES ('525630021', 89.99, '2022-11-29', '12345'), \
+                ('412967039', 89.99, '2014-02-14', '12345'), \
+                ('920475018', 15.99, '2022-09-17', '12345'), \
+                ('076139023', 15.99, '2015-04-21', '12345')")
+
+mycursor.execute("INSERT INTO Fundraiser \
+                VALUES ('26930', 'Christmas'), \
+                ('59104', 'Earth Day'), \
+                ('07183', 'Thanksgiving')")
+
+mycursor.execute("INSERT INTO Donor \
+                VALUES ('392058', 'Ernie Paulson', '34 Donor Street', \
+                'erniepson@gmail.com', '4032680719'), \
+                ('145824', 'Bert Morrisson', '16 Donor Street', \
+                'bertm45@gmail.com', '4032887214'), \
+                ('879302', 'Oscar Erikson', '90 Donor Street', \
+                'oscar8282@gmail.com', '4035067985')")
+
+mycursor.execute("INSERT INTO Donates_to \
+                VALUES ('392058', '26930', 15000.00, '2019-12-23'), \
+                ('145824', '59104', 500000.00, '2017-04-22'), \
+                ('879302', '07183', 5500.00, '2022-10-10')")

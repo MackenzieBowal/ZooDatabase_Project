@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.ttk import Notebook
 import mysql.connector
 
+import animals, enclosures, complexes
+
 # Create a connection to the database
 mydb = mysql.connector.connect(
     host = "localhost",
@@ -55,6 +57,9 @@ def handle_zookeeper_page(window,eid,mFrame):
     zookeeperNotebook.add(complexesFrame, text='Indoor Complexes')
     
     set_home_frame(homeFrame,eid)
+    animals.set_animals_frame(animalsFrame)
+    enclosures.set_enclosures_frame(enclosuresFrame)
+    complexes.set_complexes_frame(complexesFrame)
 
 def set_home_frame(hFrame,eid):
     global homePage

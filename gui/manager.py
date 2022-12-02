@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.ttk import Notebook
 import mysql.connector
 
+import employees, exhibits, enclosures, complexes, stores, fundraisers, donors
+
 # Create a connection to the database
 mydb = mysql.connector.connect(
     host = "localhost",
@@ -64,6 +66,13 @@ def handle_manager_page(window,eid,mFrame):
     managerNotebook.add(donorsFrame, text='Donors')
     
     set_home_frame(homeFrame,eid)
+    employees.set_employees_frame(employeesFrame)
+    exhibits.set_exhibits_frame(exhibitsFrame)
+    enclosures.set_enclosures_frame(enclosuresFrame)
+    complexes.set_complexes_frame(complexesFrame)
+    stores.set_stores_frame(storesFrame)
+    fundraisers.set_fundraisers_frame(fundraisersFrame)
+    donors.set_donors_frame(donorsFrame)
 
 def set_home_frame(hFrame,eid):
     global homePage

@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.ttk import Notebook
 import mysql.connector
 
+import passes, exhibits, enclosures
+
 # Create a connection to the database
 mydb = mysql.connector.connect(
     host = "localhost",
@@ -52,6 +54,9 @@ def handle_receptionist_page(window,eid,mFrame):
     receptionistNotebook.add(enclosuresFrame, text='Enclosures')
     
     set_home_frame(homeFrame,eid)
+    passes.set_passes_frame(passesFrame)
+    exhibits.set_exhibits_frame(exhibitsFrame)
+    enclosures.set_enclosures_frame(enclosuresFrame)
 
 def set_home_frame(hFrame,eid):
     global homePage

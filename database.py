@@ -21,26 +21,26 @@ mycursor.execute("CREATE TABLE Species \
 
 mycursor.execute("DROP TABLE IF EXISTS Indoor_complex")
 mycursor.execute("CREATE TABLE Indoor_complex \
-                (ComplexID INT NOT NULL, \
+                (ComplexID CHAR(1) NOT NULL, \
                 Address_nbr INT NOT NULL, \
                 Street_name VARCHAR(15) NOT NULL, \
                 PRIMARY KEY (ComplexID))")
 
 mycursor.execute("DROP TABLE IF EXISTS Enclosure")
 mycursor.execute("CREATE TABLE Enclosure \
-                (EnclosureID INT NOT NULL, \
+                (EnclosureID CHAR(6) NOT NULL, \
                 Temperature INT, \
                 Habitat VARCHAR(15), \
                 Length INT, \
                 Width INT, \
                 Height INT, \
-                ComplexID INT, \
+                ComplexID CHAR(1), \
                 PRIMARY KEY (EnclosureID), \
                 FOREIGN KEY (ComplexID) REFERENCES Indoor_complex(ComplexID))")
 
 mycursor.execute("DROP TABLE IF EXISTS Exhibit")
 mycursor.execute("CREATE TABLE Exhibit \
-                (ExhibitID INT NOT NULL, \
+                (ExhibitID CHAR(7) NOT NULL, \
                 Start_date DATE NOT NULL, \
                 End_date DATE NOT NULL, \
                 PRIMARY KEY (ExhibitID))")
@@ -51,8 +51,8 @@ mycursor.execute("CREATE TABLE Animal \
                 Birth_date DATE, \
                 Sex CHAR(1), \
                 Species_name VARCHAR(15) NOT NULL, \
-                EnclosureID INT NOT NULL, \
-                ExhibitID INT, \
+                EnclosureID CHAR(6) NOT NULL, \
+                ExhibitID CHAR(7), \
                 PRIMARY KEY (Name), \
                 FOREIGN KEY (Species_name) REFERENCES Species(Species_name), \
                 FOREIGN KEY (EnclosureID) REFERENCES Enclosure(EnclosureID), \
@@ -64,7 +64,7 @@ mycursor.execute("CREATE TABLE Employee \
                 Name VARCHAR(15), \
                 Address VARCHAR(15), \
                 Email VARCHAR(20), \
-                Phone_number VARCHAR(15), \
+                Phone_number CHAR(10), \
                 Start_date DATE, \
                 PRIMARY KEY (EmployeeID))")
 
@@ -150,7 +150,7 @@ mycursor.execute("CREATE TABLE Entertainer \
 mycursor.execute("DROP TABLE IF EXISTS Entertainer_exhibit")
 mycursor.execute("CREATE TABLE Entertainer_exhibit \
                 (EmpID CHAR(5) NOT NULL, \
-                ExhibitID INT NOT NULL, \
+                ExhibitID CHAR(7) NOT NULL, \
                 CONSTRAINT pk_EntertainerExhibit PRIMARY KEY (EmpID, ExhibitID), \
                 FOREIGN KEY (EmpID) REFERENCES Entertainer(EmployeeID), \
                 FOREIGN KEY (ExhibitID) REFERENCES Exhibit(ExhibitID))")
@@ -171,7 +171,7 @@ mycursor.execute("CREATE TABLE Receptionist \
 
 mycursor.execute("DROP TABLE IF EXISTS Pass")
 mycursor.execute("CREATE TABLE Pass \
-                (PassID INT NOT NULL, \
+                (PassID CHAR(9) NOT NULL, \
                 Sold_price FLOAT, \
                 Date_issued DATE, \
                 Receptionist_EID CHAR(5), \
@@ -180,10 +180,10 @@ mycursor.execute("CREATE TABLE Pass \
 
 mycursor.execute("DROP TABLE IF EXISTS Membership")
 mycursor.execute("CREATE TABLE Membership \
-                (Email VARCHAR(15) NOT NULL, \
+                (Email VARCHAR(20) NOT NULL, \
                 Member_name VARCHAR(15), \
                 Duration INT NOT NULL, \
-                PassID INT NOT NULL, \
+                PassID CHAR(9) NOT NULL, \
                 PRIMARY KEY (Email), \
                 FOREIGN KEY (PassID) REFERENCES Pass(PassID))")
 
@@ -204,36 +204,36 @@ mycursor.execute("CREATE TABLE Manager_previousrole \
 mycursor.execute("DROP TABLE IF EXISTS Ticket")
 mycursor.execute("CREATE TABLE Ticket \
                 (TicketID INT NOT NULL, \
-                PassID INT NOT NULL, \
+                PassID CHAR(9) NOT NULL, \
                 PRIMARY KEY (TicketID), \
                 FOREIGN KEY (PassID) REFERENCES Pass(PassID))")
 
 mycursor.execute("DROP TABLE IF EXISTS Fundraiser")
 mycursor.execute("CREATE TABLE Fundraiser \
-                (FundraiserID INT NOT NULL, \
+                (FundraiserID CHAR(5) NOT NULL, \
                 Theme VARCHAR(15), \
                 PRIMARY KEY (FundraiserID))")
 
 mycursor.execute("DROP TABLE IF EXISTS Overlooks")
 mycursor.execute("CREATE TABLE Overlooks \
                 (Manager_EID INT NOT NULL, \
-                FundraiserID INT NOT NULL, \
+                FundraiserID CHAR(5) NOT NULL, \
                 CONSTRAINT pk_Overlooks PRIMARY KEY (Manager_EID, FundraiserID), \
                 FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID))")
 
 mycursor.execute("DROP TABLE IF EXISTS Donor")
 mycursor.execute("CREATE TABLE Donor \
-                (DonorID INT NOT NULL, \
+                (DonorID CHAR(6) NOT NULL, \
                 Name VARCHAR(15), \
                 Address VARCHAR(15), \
-                Email VARCHAR(15), \
-                Phone_number INT, \
+                Email VARCHAR(20), \
+                Phone_number CHAR(10), \
                 PRIMARY KEY (DonorID))")
 
 mycursor.execute("DROP TABLE IF EXISTS Donates_to")
 mycursor.execute("CREATE TABLE Donates_to \
-                (DonorID INT NOT NULL, \
-                FundraiserID INT NOT NULL, \
+                (DonorID CHAR(6) NOT NULL, \
+                FundraiserID CHAR(5) NOT NULL, \
                 Amount FLOAT NOT NULL, \
                 Date DATE NOT NULL, \
                 CONSTRAINT pk_DonatesTo PRIMARY KEY (DonorID, FundraiserID), \

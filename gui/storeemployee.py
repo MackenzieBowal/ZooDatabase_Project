@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.ttk import Notebook
 import mysql.connector
 
+import stores
+
 # Create a connection to the database
 mydb = mysql.connector.connect(
     host = "localhost",
@@ -46,6 +48,7 @@ def handle_storeemployee_page(window,eid,mFrame):
     storeemployeeNotebook.add(storesFrame, text='Stores')
     
     set_home_frame(homeFrame,eid)
+    stores.set_stores_frame(storesFrame)
 
 def set_home_frame(hFrame,eid):
     global homePage

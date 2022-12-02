@@ -2,6 +2,8 @@ from tkinter import *
 from tkinter.ttk import Notebook
 import mysql.connector
 
+import exhibits
+
 # Create a connection to the database
 mydb = mysql.connector.connect(
     host = "localhost",
@@ -46,6 +48,7 @@ def handle_entertainer_page(window,eid,mFrame):
     entertainerNotebook.add(exhibitsFrame, text='Exhibits')
     
     set_home_frame(homeFrame,eid)
+    exhibits.set_exhibits_frame(exhibitsFrame)
 
 def set_home_frame(hFrame,eid):
     global homePage
