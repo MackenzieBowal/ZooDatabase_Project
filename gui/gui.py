@@ -2,11 +2,13 @@ from tkinter import *
 from visitor import handleVisitorPage
 
 
-def login():
-    loginPage.place(relwidth=1,relheight=1)
+from signin import handle_signin_page
 
 def visitorClick():
     handleVisitorPage(window, welcomePage)
+    
+def signin_click():
+    handle_signin_page(window)
 
 def mainMenu():
     welcomePage.place(relwidth=1,relheight=1)
@@ -22,8 +24,8 @@ def initiate():
     welcomePage = Frame(window)
 
     welcomeMessage = Label(welcomePage,text="Welcome to the Zoo!\nPlease log in to continue.")
-    employeeButton = Button(welcomePage,text="Employee",command=login)
-    visitorButton = Button(welcomePage,text="Visitor", command=visitorClick)
+    employeeButton = Button(welcomePage,text="Employee",command=signin_click)
+    visitorButton = Button(welcomePage,text="Visitor")
 
     welcomeMessage.grid(row=0,column=0,columnspan=2,sticky=N+S+W+E,padx=5)
     employeeButton.grid(row=1,column=0,sticky=N+S+W+E,padx=10,pady=5)
@@ -35,21 +37,8 @@ def initiate():
     welcomePage.columnconfigure(0,weight=1)
     welcomePage.columnconfigure(1,weight=1)
 
-
-    # make employee login page
-    global loginPage
-    loginPage = Frame(window)
-    testText = Label(loginPage,text="Test text")
-    testText.grid(row=0,column=0,sticky=N+S+W+E)
-
-
     welcomePage.place(relwidth=1,relheight=1)
 
     window.mainloop() #An infinite loop, runs until we close the window
 
 initiate()
-
-
-
-
-
