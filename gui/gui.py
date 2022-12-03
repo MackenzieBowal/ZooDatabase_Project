@@ -1,7 +1,12 @@
 from tkinter import *
+from visitor import handleVisitorPage
+
 
 from signin import handle_signin_page
 
+def visitorClick():
+    handleVisitorPage(window, welcomePage)
+    
 def signin_click():
     handle_signin_page(window)
 
