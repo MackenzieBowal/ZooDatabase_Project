@@ -60,8 +60,42 @@ mycursor.execute("INSERT INTO Store \
                 ('Jungle Fun', 'Souvenir Shop', '45678'), \
                 ('Coming Soon', NULL, '45678')")
 
+mycursor.execute("INSERT INTO Daily_revenue \
+                VALUES ('2022-11-29', 1024.98, 'Jungle Fun'), \
+                ('2022-11-28', 1209.67, 'Jungle Fun'), \
+                ('2022-11-27', 1057.34, 'Jungle Fun'), \
+                ('2022-11-26', 989.26, 'Jungle Fun'), \
+                ('2022-11-25', 1138.94, 'Jungle Fun'), \
+                ('2022-11-24', 1055.62, 'Jungle Fun'), \
+                ('2022-11-23', 1093.99, 'Jungle Fun'), \
+                ('2022-11-22', 1370.25, 'Jungle Fun'), \
+                ('2022-11-21', 1254.10, 'Jungle Fun'), \
+                ('2022-11-20', 1072.81, 'Jungle Fun'), \
+                ('2022-11-19', 1195.87, 'Jungle Fun'), \
+                ('2022-11-18', 953.97, 'Jungle Fun'), \
+                ('2022-11-17', 1029.63, 'Jungle Fun'), \
+                ('2022-11-16', 1176.28, 'Jungle Fun'), \
+                ('2022-11-15', 1068.70, 'Jungle Fun'), \
+                ('2022-11-29', 1439.28, 'Safari Eatery'), \
+                ('2022-11-28', 1304.99, 'Safari Eatery'), \
+                ('2022-11-27', 1192.54, 'Safari Eatery'), \
+                ('2022-11-26', 1478.81, 'Safari Eatery'), \
+                ('2022-11-27', 1503.50, 'Safari Eatery'), \
+                ('2022-11-26', 1294.46, 'Safari Eatery'), \
+                ('2022-11-25', 1372.60, 'Safari Eatery'), \
+                ('2022-11-24', 1265.57, 'Safari Eatery'), \
+                ('2022-11-23', 1119.13, 'Safari Eatery'), \
+                ('2022-11-22', 1431.42, 'Safari Eatery'), \
+                ('2022-11-21', 1585.25, 'Safari Eatery'), \
+                ('2022-11-20', 1329.65, 'Safari Eatery'), \
+                ('2022-11-19', 1216.79, 'Safari Eatery'), \
+                ('2022-11-18', 1373.08, 'Safari Eatery')")
+
 mycursor.execute("INSERT INTO Zookeeper \
                 VALUES ('34567')")
+
+mycursor.execute("INSERT INTO Zookeeper_specialization \
+                VALUES ('Big Cats', '34567')")
 
 mycursor.execute("INSERT INTO Entertainer \
                 VALUES ('23456')")
@@ -78,10 +112,32 @@ mycursor.execute("INSERT INTO Pass \
                 ('920475018', 15.99, '2022-09-17', '12345'), \
                 ('076139023', 15.99, '2015-04-21', '12345')")
 
+mycursor.execute("INSERT INTO Membership \
+                VALUES ('member1@gmail.com', 'Andrew Evans', 30, '525630021'), \
+                ('member2@gmail.com', 'Rachel Smith', 13, '412967039')")
+
+mycursor.execute("INSERT INTO Cares_for \
+                VALUES ('34567', 'Lion'), \
+                ('34567', 'Buffalo'), \
+                ('34567', 'Platypus')")
+
+mycursor.execute("INSERT INTO Manager_previousrole \
+                VALUES ('Receptionist', '45678'), \
+                ('Zookeeper', '45678')")
+
+mycursor.execute("INSERT INTO Ticket \
+                VALUES ('47628197', '920475018'), \
+                ('13829400', '076139023')")
+
 mycursor.execute("INSERT INTO Fundraiser \
                 VALUES ('26930', 'Christmas'), \
                 ('59104', 'Earth Day'), \
                 ('07183', 'Thanksgiving')")
+
+mycursor.execute("INSERT INTO Overlooks \
+                VALUES ('45678', '26930'), \
+                ('45678', '59104'), \
+                ('45678', '07183')")
 
 mycursor.execute("INSERT INTO Donor \
                 VALUES ('392058', 'Ernie Paulson', '34 Donor Street', \

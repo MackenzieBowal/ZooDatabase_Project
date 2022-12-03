@@ -115,7 +115,7 @@ mycursor.execute("CREATE TABLE Animal_condition \
 mycursor.execute("DROP TABLE IF EXISTS Daily_revenue")
 mycursor.execute("CREATE TABLE Daily_revenue \
                 (Date DATE NOT NULL, \
-                Revenue INT NOT NULL, \
+                Revenue FLOAT NOT NULL, \
                 Store_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_DailyRevenue PRIMARY KEY (Date, Revenue, Store_name), \
                 FOREIGN KEY (Store_name) REFERENCES Store(Store_name))")
@@ -136,9 +136,9 @@ mycursor.execute("CREATE TABLE Zookeeper \
 
 mycursor.execute("DROP TABLE IF EXISTS Zookeeper_specialization")
 mycursor.execute("CREATE TABLE Zookeeper_specialization \
-                (Specialisation VARCHAR(15) NOT NULL, \
+                (Specialization VARCHAR(15) NOT NULL, \
                 Zookeeper_EID CHAR(5) NOT NULL, \
-                CONSTRAINT pk_ZookeeperSpecialization PRIMARY KEY (Specialisation, Zookeeper_EID), \
+                CONSTRAINT pk_ZookeeperSpecialization PRIMARY KEY (Specialization, Zookeeper_EID), \
                 FOREIGN KEY (Zookeeper_EID) REFERENCES Zookeeper(EmployeeID))")
 
 mycursor.execute("DROP TABLE IF EXISTS Entertainer")
@@ -203,7 +203,7 @@ mycursor.execute("CREATE TABLE Manager_previousrole \
 
 mycursor.execute("DROP TABLE IF EXISTS Ticket")
 mycursor.execute("CREATE TABLE Ticket \
-                (TicketID INT NOT NULL, \
+                (TicketID CHAR(8) NOT NULL, \
                 PassID CHAR(9) NOT NULL, \
                 PRIMARY KEY (TicketID), \
                 FOREIGN KEY (PassID) REFERENCES Pass(PassID))")

@@ -15,7 +15,6 @@ mycursor = mydb.cursor()
 
 def show_exhibit(event):
     exhibit = exhibitSelection.get()
-    print(exhibit)
 
     exhibitLabel.config(text="Exhibit ID: " + exhibit)
     mycursor.execute("SELECT Start_date FROM Exhibit WHERE ExhibitID = %s"%exhibit)

@@ -1,6 +1,7 @@
 from ctypes import alignment
 from tkinter import *
 from tkinter.ttk import Combobox
+from tkinter.scrolledtext import ScrolledText
 import mysql.connector
 
 # Create a connection to the database
@@ -29,6 +30,21 @@ def show_store(event):
         result = "N/A"
     managerLabel.config(text="Manager: " + result)
 
+    mycursor.execute("SELECT Date FROM Daily_revenue WHERE Store_name = '%s'"%store)
+    dates = mycursor.fetchall()
+    dailyrevenueText['state'] = 'normal'
+    dailyrevenueText.delete("2.0", "end")
+    dailyrevenueText.insert("1.end", '\n')
+    line = 2
+    for date in dates:
+        mycursor.execute("SELECT Revenue FROM Daily_revenue WHERE Store_name = '%s' AND Date = '%s'"%(store,str(date[0])))
+        revenue = mycursor.fetchall()[0][0]
+        dailyrevenueString = str(date[0]) + ": $" + str(revenue) + '\n'
+        position = str(line) + ".0"
+        dailyrevenueText.insert(position, dailyrevenueString)
+        line += 1
+    dailyrevenueText['state'] = 'disabled'
+
 def set_stores_frame(sFrame):
     global storesFrame
     storesFrame = sFrame
@@ -56,10 +72,15 @@ def set_stores_frame(sFrame):
     global storeLabel
     global typeLabel
     global managerLabel
+    global dailyrevenueText
 
     storeLabel = Label(storesFrame, text="Name: None selected")
-    storeLabel.grid(column = 1, row = 2, padx=300, pady=20, sticky=S+E+W)
+    storeLabel.grid(column = 0, row = 2, padx=300, pady=20, sticky=S+E+W)
     typeLabel = Label(storesFrame, text="Type: ")
-    typeLabel.grid(column = 1, row = 3, padx=300, pady=20, sticky=N+S+E+W)
+    typeLabel.grid(column = 0, row = 3, padx=300, pady=20, sticky=N+S+E+W)
     managerLabel = Label(storesFrame, text="Manager: ")
-    managerLabel.grid(column = 1, row = 4, padx=300, pady=20, sticky=N+S+E+W)
+    managerLabel.grid(column = 0, row = 4, padx=300, pady=20, sticky=N+S+E+W)
+    dailyrevenueText = ScrolledText(storesFrame, height=8)
+    dailyrevenueText.grid(column = 1, row = 2, rowspan=3, pady=20, sticky=N+S+E+W)
+    dailyrevenueText.insert('1.0', "Daily Revenue:\n")
+    dailyrevenueText['state'] = 'disabled'
