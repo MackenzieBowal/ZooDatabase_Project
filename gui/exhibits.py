@@ -84,7 +84,7 @@ def modClick():
 
     newstart = modstartBox.get()
     if newstart == '':
-        newstart.execute("SELECT Start_date FROM Exhibit WHERE ExhibitID="+originalid)
+        mycursor.execute("SELECT Start_date FROM Exhibit WHERE ExhibitID="+originalid)
         newstart = str(mycursor.fetchall()[0][0])
 
     newend = modendBox.get()

@@ -58,7 +58,7 @@ def handle_zookeeper_page(window,eid,mFrame):
     
     set_home_frame(homeFrame,eid)
     animals.set_animals_frame(animalsFrame)
-    enclosures.set_enclosures_frame(enclosuresFrame)
+    enclosures.set_enclosures_frame(enclosuresFrame, False)
     complexes.set_complexes_frame(complexesFrame)
 
 def set_home_frame(hFrame,eid):

@@ -30,7 +30,7 @@ mycursor.execute("INSERT INTO Enclosure \
                 ('350586', 28, 'Savannah', 50, 40, NULL, NULL)")
 
 mycursor.execute("INSERT INTO Exhibit \
-                VALUES ('8675309', 'Jungle', '2022-11-18', '2022-12-18'), \
+                VALUES ('8675309', 'History', '2022-11-18', '2022-12-18'), \
                 ('0951287', 'Nocturnal', '2022-03-08', '2022-03-31'), \
                 ('3863048', 'Polar', '2013-05-16', '2013-07-24'), \
                 ('8324767', 'Birds', '2022-12-01', '2023-01-05'), \
