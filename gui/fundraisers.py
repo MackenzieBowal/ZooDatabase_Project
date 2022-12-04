@@ -46,7 +46,6 @@ def delFundraiser():
         w.destroy()
 
     # create delete page
-    fname = StringVar()
     fselectLabel = Label(fundraisersFrame,text="Select Fundraiser: ")
     global fselectBox
     delValue = ""
@@ -80,12 +79,11 @@ def modClick():
         mycursor.execute("SELECT Theme FROM Fundraiser WHERE FundraiserID="+originalFID)
         newFTheme = str(mycursor.fetchall()[0][0])
 
-
-    mycursor.execute("UPDATE Fundraiser SET \
+    try:
+        mycursor.execute("UPDATE Fundraiser SET \
                 FundraiserID='"+newFID+"', Theme='"+newFTheme+"' WHERE FundraiserID=" + originalFID)
-        #mycursor.execute("UPDATE Overlooks SET FundraiserID="+newFID+" WHERE FundraiserID="+originalFID)
-    #except:
-    #    showerror(title="Error", message="Invalid FundraiserID or Theme. Please try again.")
+    except:
+        showerror(title="Error", message="Invalid FundraiserID or Theme. Please try again.")
     return
 
 def modFundraiser():

@@ -30,13 +30,13 @@ mycursor.execute("INSERT INTO Enclosure \
                 ('350586', 28, 'Savannah', 50, 40, NULL, NULL)")
 
 mycursor.execute("INSERT INTO Exhibit \
-                VALUES ('8675309', '2022-11-18', '2022-12-18'), \
-                ('0951287', '2022-03-08', '2022-03-31'), \
-                ('3863048', '2013-05-16', '2013-07-24'), \
-                ('8324767', '2022-12-01', '2023-01-05'), \
-                ('9672122', '2022-11-29', '2022-12-10'), \
-                ('5432235', '2016-08-15', '2016-09-15'), \
-                ('6823527', '2019-12-02', '2020-03-14')")
+                VALUES ('8675309', 'Jungle', '2022-11-18', '2022-12-18'), \
+                ('0951287', 'Nocturnal', '2022-03-08', '2022-03-31'), \
+                ('3863048', 'Polar', '2013-05-16', '2013-07-24'), \
+                ('8324767', 'Birds', '2022-12-01', '2023-01-05'), \
+                ('9672122', 'Africa', '2022-11-29', '2022-12-10'), \
+                ('5432235', 'Freshwater', '2016-08-15', '2016-09-15'), \
+                ('6823527', 'Asia', '2019-12-02', '2020-03-14')")
 
 mycursor.execute("INSERT INTO Animal \
                 VALUES ('Rex', '2016-07-15', 'M', 'Lion', '350586', NULL), \
@@ -63,7 +63,8 @@ mycursor.execute("INSERT INTO Emp_signin \
                 ('56789', 'password5')")
 
 mycursor.execute("INSERT INTO Manager \
-                VALUES ('45678')")
+                VALUES ('45678'), \
+                ('12345')")
 
 mycursor.execute("INSERT INTO Store \
                 VALUES ('Safari Eatery', 'Restaurant', '45678'), \
