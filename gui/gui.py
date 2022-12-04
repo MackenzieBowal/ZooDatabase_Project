@@ -2,11 +2,15 @@ from tkinter import *
 from visitor import handleVisitorPage
 from signin import handle_signin_page
 
+from manager import handle_manager_page
+
 def visitorClick():
     handleVisitorPage(window, welcomePage)
 
 def signin_click():
-    handle_signin_page(window, welcomePage)
+    #handle_signin_page(window, welcomePage)
+
+    handle_manager_page(window,45678,welcomePage)
 
 def mainMenu():
     welcomePage.place(relwidth=1,relheight=1)

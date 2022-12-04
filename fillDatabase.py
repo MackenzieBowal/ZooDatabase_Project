@@ -150,12 +150,12 @@ mycursor.execute("INSERT INTO Overlooks \
                 ('45678', '07183')")
 
 mycursor.execute("INSERT INTO Donor \
-                VALUES ('392058', 'Ernie Paulson', '34 Donor Street', \
-                'erniepson@gmail.com', '4032680719'), \
-                ('145824', 'Bert Morrisson', '16 Donor Street', \
-                'bertm45@gmail.com', '4032887214'), \
-                ('879302', 'Oscar Erikson', '90 Donor Street', \
-                'oscar8282@gmail.com', '4035067985')")
+                VALUES ('392058', 'Ernie Paulson', '34 Donorly Street', \
+                'erniepson@gmail.com', '4032680719', 45000), \
+                ('145824', 'Bert Morrisson', '16 Donormy Street', \
+                'bertm45@gmail.com', '4032887214', 137000), \
+                ('879302', 'Oscar Erikson', '90 Donorfy Street', \
+                'oscar8282@gmail.com', '4035067985', 1475000)")
 
 mycursor.execute("INSERT INTO Donates_to \
                 VALUES ('392058', '26930', 15000.00, '2019-12-23'), \

@@ -66,7 +66,7 @@ mycursor.execute("CREATE TABLE Enclosure \
                 Height INT, \
                 ComplexID CHAR(1), \
                 PRIMARY KEY (EnclosureID), \
-                FOREIGN KEY (ComplexID) REFERENCES Indoor_complex(ComplexID))")
+                FOREIGN KEY (ComplexID) REFERENCES Indoor_complex(ComplexID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Exhibit \
                 (ExhibitID CHAR(7) NOT NULL, \
@@ -82,9 +82,9 @@ mycursor.execute("CREATE TABLE Animal \
                 EnclosureID CHAR(6) NOT NULL, \
                 ExhibitID CHAR(7), \
                 PRIMARY KEY (Name), \
-                FOREIGN KEY (Species_name) REFERENCES Species(Species_name), \
-                FOREIGN KEY (EnclosureID) REFERENCES Enclosure(EnclosureID), \
-                FOREIGN KEY (ExhibitID) REFERENCES Exhibit(ExhibitID))")
+                FOREIGN KEY (Species_name) REFERENCES Species(Species_name) ON DELETE CASCADE, \
+                FOREIGN KEY (EnclosureID) REFERENCES Enclosure(EnclosureID) ON DELETE CASCADE, \
+                FOREIGN KEY (ExhibitID) REFERENCES Exhibit(ExhibitID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Employee \
                 (EmployeeID CHAR(5) NOT NULL, \
@@ -100,89 +100,89 @@ mycursor.execute("CREATE TABLE Species_diet \
                 (Diet VARCHAR(15) NOT NULL, \
                 Species_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_SpeciesDiet PRIMARY KEY (Diet, Species_name), \
-                FOREIGN KEY (Species_name) REFERENCES Species(Species_name))")
+                FOREIGN KEY (Species_name) REFERENCES Species(Species_name) ON DELETE CASCADE)")
 '''
 
 mycursor.execute("CREATE TABLE Manager \
                 (EmployeeID CHAR(5) NOT NULL, \
                 PRIMARY KEY (EmployeeID), \
-                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID))")
+                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Store \
                 (Store_name VARCHAR(15) NOT NULL, \
                 Type VARCHAR(15), \
                 Manager_EID CHAR(5) NOT NULL, \
                 PRIMARY KEY (Store_name), \
-                FOREIGN KEY (Manager_EID) REFERENCES Manager(EmployeeID))")
+                FOREIGN KEY (Manager_EID) REFERENCES Manager(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Vaccine_recd \
                 (Vaccine_name VARCHAR(15) NOT NULL, \
                 Date DATE NOT NULL, \
                 Animal_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_VaccineRecd PRIMARY KEY (Vaccine_name, Date, Animal_name), \
-                FOREIGN KEY (Animal_name) REFERENCES Animal(Name))")
+                FOREIGN KEY (Animal_name) REFERENCES Animal(Name) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Procedure_recd \
                 (Procedure_name VARCHAR(15) NOT NULL, \
                 Date DATE NOT NULL, \
                 Animal_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_ProcedureRecd PRIMARY KEY (Procedure_name, Date, Animal_name), \
-                FOREIGN KEY (Animal_name) REFERENCES Animal(Name))")
+                FOREIGN KEY (Animal_name) REFERENCES Animal(Name) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Animal_condition \
                 (Condition_name VARCHAR(15) NOT NULL, \
                 Animal_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_AnimalCondition PRIMARY KEY (Condition_name, Animal_name), \
-                FOREIGN KEY (Animal_name) REFERENCES Animal(Name))")
+                FOREIGN KEY (Animal_name) REFERENCES Animal(Name) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Daily_revenue \
                 (Date DATE NOT NULL, \
                 Revenue FLOAT NOT NULL, \
                 Store_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_DailyRevenue PRIMARY KEY (Date, Revenue, Store_name), \
-                FOREIGN KEY (Store_name) REFERENCES Store(Store_name))")
+                FOREIGN KEY (Store_name) REFERENCES Store(Store_name) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Inventory_item \
                 (Item_price VARCHAR(15) NOT NULL, \
                 Item_name DATE NOT NULL, \
                 Store_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_InventoryItem PRIMARY KEY (Item_price, Item_name, Store_name), \
-                FOREIGN KEY (Store_name) REFERENCES Store(Store_name))")
+                FOREIGN KEY (Store_name) REFERENCES Store(Store_name) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Zookeeper \
                 (EmployeeID CHAR(5) NOT NULL, \
                 PRIMARY KEY (EmployeeID), \
-                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID))")
+                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Zookeeper_specialization \
                 (Specialization VARCHAR(15) NOT NULL, \
                 Zookeeper_EID CHAR(5) NOT NULL, \
                 CONSTRAINT pk_ZookeeperSpecialization PRIMARY KEY (Specialization, Zookeeper_EID), \
-                FOREIGN KEY (Zookeeper_EID) REFERENCES Zookeeper(EmployeeID))")
+                FOREIGN KEY (Zookeeper_EID) REFERENCES Zookeeper(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Entertainer \
                 (EmployeeID CHAR(5) NOT NULL, \
                 PRIMARY KEY (EmployeeID), \
-                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID))")
+                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Entertainer_exhibit \
                 (EmpID CHAR(5) NOT NULL, \
                 ExhibitID CHAR(7) NOT NULL, \
                 CONSTRAINT pk_EntertainerExhibit PRIMARY KEY (EmpID, ExhibitID), \
-                FOREIGN KEY (EmpID) REFERENCES Entertainer(EmployeeID), \
-                FOREIGN KEY (ExhibitID) REFERENCES Exhibit(ExhibitID))")
+                FOREIGN KEY (EmpID) REFERENCES Entertainer(EmployeeID) ON DELETE CASCADE, \
+                FOREIGN KEY (ExhibitID) REFERENCES Exhibit(ExhibitID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Other_employee \
                 (EmployeeID CHAR(5) NOT NULL, \
                 Store_name VARCHAR(15), \
                 PRIMARY KEY (EmployeeID), \
-                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID), \
-                FOREIGN KEY (Store_name) REFERENCES Store(Store_name))")
+                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE, \
+                FOREIGN KEY (Store_name) REFERENCES Store(Store_name) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Receptionist \
                 (EmployeeID CHAR(5) NOT NULL, \
                 PRIMARY KEY (EmployeeID), \
-                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID))")
+                FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Pass \
                 (PassID CHAR(9) NOT NULL, \
@@ -190,7 +190,7 @@ mycursor.execute("CREATE TABLE Pass \
                 Date_issued DATE, \
                 Receptionist_EID CHAR(5), \
                 PRIMARY KEY (PassID), \
-                FOREIGN KEY (Receptionist_EID) REFERENCES Receptionist(EmployeeID))")
+                FOREIGN KEY (Receptionist_EID) REFERENCES Receptionist(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Membership \
                 (Email VARCHAR(20) NOT NULL, \
@@ -198,25 +198,25 @@ mycursor.execute("CREATE TABLE Membership \
                 Duration INT NOT NULL, \
                 PassID CHAR(9) NOT NULL, \
                 PRIMARY KEY (Email), \
-                FOREIGN KEY (PassID) REFERENCES Pass(PassID))")
+                FOREIGN KEY (PassID) REFERENCES Pass(PassID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Cares_for \
                 (Zookeeper_EID CHAR(5) NOT NULL, \
                 Species_name VARCHAR(15) NOT NULL, \
                 CONSTRAINT pk_CaresFor PRIMARY KEY (Zookeeper_EID, Species_name), \
-                FOREIGN KEY (Zookeeper_EID) REFERENCES Zookeeper(EmployeeID))")
+                FOREIGN KEY (Zookeeper_EID) REFERENCES Zookeeper(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Manager_previousrole \
                 (Previous_role VARCHAR(15) NOT NULL, \
                 Manager_EID CHAR(5) NOT NULL, \
                 CONSTRAINT pk_ManagerPreviousrole PRIMARY KEY (Previous_role, Manager_EID), \
-                FOREIGN KEY (Manager_EID) REFERENCES Manager(EmployeeID))")
+                FOREIGN KEY (Manager_EID) REFERENCES Manager(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Ticket \
                 (TicketID CHAR(8) NOT NULL, \
                 PassID CHAR(9) NOT NULL, \
                 PRIMARY KEY (TicketID), \
-                FOREIGN KEY (PassID) REFERENCES Pass(PassID))")
+                FOREIGN KEY (PassID) REFERENCES Pass(PassID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Fundraiser \
                 (FundraiserID CHAR(5) NOT NULL, \
@@ -227,15 +227,16 @@ mycursor.execute("CREATE TABLE Overlooks \
                 (Manager_EID VARCHAR(5) NOT NULL, \
                 FundraiserID CHAR(5) NOT NULL, \
                 CONSTRAINT pk_Overlooks PRIMARY KEY (Manager_EID, FundraiserID), \
-                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID), \
-                FOREIGN KEY (Manager_EID) REFERENCES Employee(EmployeeID))")
+                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID) ON DELETE CASCADE, \
+                FOREIGN KEY (Manager_EID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Donor \
                 (DonorID CHAR(6) NOT NULL, \
                 Name VARCHAR(15), \
-                Address VARCHAR(15), \
+                Address VARCHAR(30), \
                 Email VARCHAR(20), \
                 Phone_number CHAR(10), \
+                Amount_donated INT, \
                 PRIMARY KEY (DonorID))")
 
 mycursor.execute("CREATE TABLE Donates_to \
@@ -244,11 +245,11 @@ mycursor.execute("CREATE TABLE Donates_to \
                 Amount FLOAT NOT NULL, \
                 Date DATE NOT NULL, \
                 CONSTRAINT pk_DonatesTo PRIMARY KEY (DonorID, FundraiserID), \
-                FOREIGN KEY (DonorID) REFERENCES Donor(DonorID), \
-                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID))")
+                FOREIGN KEY (DonorID) REFERENCES Donor(DonorID) ON DELETE CASCADE, \
+                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID) ON DELETE CASCADE)")
 
 mycursor.execute("CREATE TABLE Emp_signin \
                 (EmpID CHAR(5) NOT NULL, \
                 Password CHAR(10) NOT NULL, \
                 CONSTRAINT pk_EmpSignin PRIMARY KEY (EmpID, Password), \
-                FOREIGN KEY (EmpID) REFERENCES Employee(EmployeeID))")
+                FOREIGN KEY (EmpID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE)")
