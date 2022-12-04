@@ -33,17 +33,40 @@ def doneClick():
     set_fundraisers_frame(savedFFrame, True)
     return
 
+def deleteClick():
+
+    delValue = fselectBox.get()
+
+    mycursor.execute("DELETE FROM Fundraiser WHERE FundraiserID=" + delValue)
+
+    return
+
 def delFundraiser():
 
+    # Refresh the page
     for w in fundraisersFrame.winfo_children():
         w.destroy()
 
+    # create delete page
+    fname = StringVar()
+    fselectLabel = Label(fundraisersFrame,text="Select Fundraiser: ")
+    global fselectBox
+    global fselectBox
+    delValue = ""
+    fselectBox = Combobox(fundraisersFrame, width = 30, textvariable = delValue)
+    fselectLabel.grid(row=1,column=0,sticky=E,padx=5,pady=10)
+    fselectBox.grid(row=1,column=1,sticky=E+W,padx=5,pady=10)
+    fselectButton = Button(fundraisersFrame, text="Delete", command=deleteClick)
+    fselectButton.grid(row=1,column=2,stick=W)
 
-    mytext = Label(fundraisersFrame, text="yay it worked")
-    mytext.grid(row=1, column=1, sticky=N+S+E+W)
+    mycursor.execute("SELECT FundraiserID FROM Fundraiser")
+    result = mycursor.fetchall()
+
+    fselectBox['values'] = result
+    fselectBox['state'] = 'readonly'
 
     doneButton = Button(fundraisersFrame, text="Done", command=doneClick)
-    doneButton.grid(row=2, column=1)
+    doneButton.grid(row=2, columnspan=3)
 
 
     return
@@ -77,7 +100,7 @@ def addFundraiser(event):
     doneButton.grid(row=2, column=1)
 
 
-    
+
     return
 
 
