@@ -30,11 +30,9 @@ def handleVisitorPage(window, bFrame):
     frame2 = Frame(visitorNotebook, width=1000, height=700)
     speciesFrame = Frame(visitorNotebook, width=1000, height=700)
 
-
     frame1.pack(fill='both', expand=True)
     frame2.pack(fill='both', expand=True)
     speciesFrame.pack(fill='both', expand=True)
-
 
     visitorNotebook.add(frame1, text='Exhibits')
     visitorNotebook.add(frame2, text='Enclosures')

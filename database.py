@@ -239,3 +239,10 @@ mycursor.execute("CREATE TABLE Donates_to \
                 CONSTRAINT pk_DonatesTo PRIMARY KEY (DonorID, FundraiserID), \
                 FOREIGN KEY (DonorID) REFERENCES Donor(DonorID), \
                 FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID))")
+
+mycursor.execute("DROP TABLE IF EXISTS Emp_signin")
+mycursor.execute("CREATE TABLE Emp_signin \
+                (EmpID CHAR(5) NOT NULL, \
+                Password CHAR(10) NOT NULL, \
+                CONSTRAINT pk_EmpSignin PRIMARY KEY (EmpID, Password), \
+                FOREIGN KEY (EmpID) REFERENCES Employee(EmployeeID))")
