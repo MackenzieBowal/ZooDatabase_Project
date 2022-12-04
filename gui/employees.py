@@ -1,5 +1,6 @@
 from ctypes import alignment
 from tkinter import *
+from tkinter.messagebox import showerror
 from tkinter.ttk import Combobox
 import mysql.connector
 
@@ -8,12 +9,27 @@ mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "password",
-    database = "zoodatabase"
+    database = "zoodatabase",
+    autocommit = True
 )
 
 mycursor = mydb.cursor()
 
 def show_employee(event):
+
+    """
+    global worksAtStoreLabel
+    worksAtStoreLabel = Label(employeesFrame, text="Works at store: ")
+    worksAtStoreLabel.grid(row=8)
+
+
+
+    #Erase the details of any previous zookeeper/manager that are still on the screen
+    if previousEmployee == "storeEmp":
+        worksAtStoreLabel.destroy()
+
+    """
+
     employee = employeeSelection.get()
     employeeLabel.config(text="Employee ID: " + employee)
 
@@ -47,6 +63,7 @@ def show_employee(event):
         result = "N/A"
     startdateLabel.config(text="Start Date: " + result)
 
+    '''
     mycursor.execute("SELECT * FROM Zookeeper WHERE EmployeeID = '%s'"%employee)
     result = mycursor.fetchall()
     if len(result) > 0: #Employee is a zookeeper
@@ -58,7 +75,9 @@ def show_employee(event):
             show_manager(employee)
         else: #Employee has some other role
             show_other(employee)
+    '''
 
+"""
 def show_zookeeper(employee):
     global previousEmployee
     global specializationLabel
@@ -123,7 +142,8 @@ def show_manager(employee):
     for fundraiser in result:
         overlooksString = overlooksString + fundraiser[0] + " "
     overlooksLabel.config(text=overlooksString)
-
+"""
+"""
 def show_other(employee):
     #Erase the details of any previous zookeeper/manager that are still on the screen
     if previousEmployee == "zookeeper":
@@ -132,6 +152,7 @@ def show_other(employee):
     elif previousEmployee == "manager":
         previousroleLabel.destroy()
         overlooksLabel.destroy()
+"""
 
 #################################################
 
@@ -172,11 +193,224 @@ def delEmployee():
 
     return
 
+
+def modClick():
+    originalid = modESelectBox.get()
+    newid = modidBox.get()
+
+    # Keep original values the same if not modified
+    if newid == '':
+        newid = originalid
+
+    newname = modnameBox.get()
+    if newname == '':
+        mycursor.execute("SELECT Name FROM Employee WHERE EmployeeID="+originalid)
+        newname = str(mycursor.fetchall()[0][0])
+
+    newphone = modphoneBox.get()
+    if newphone == '':
+        mycursor.execute("SELECT Phone_number FROM Employee WHERE EmployeeID="+originalid)
+        newphone = str(mycursor.fetchall()[0][0])
+
+    newemail = modemailBox.get()
+    if newemail == '':
+        mycursor.execute("SELECT Email FROM Employee WHERE EmployeeID="+originalid)
+        newemail = str(mycursor.fetchall()[0][0])
+
+    newaddress = modaddressBox.get()
+    if newaddress == '':
+        mycursor.execute("SELECT Address FROM Employee WHERE EmployeeID="+originalid)
+        newaddress = str(mycursor.fetchall()[0][0])
+
+    # Update table
+    try:
+        mycursor.execute("UPDATE Employee SET \
+                EmployeeID='"+newid+"', Name='"+newname+"', Phone_number='"+newphone+"', \
+                Email='"+newemail+"', Address='"+newaddress+"' WHERE EmployeeID=" + originalid)
+    except:
+        showerror(title="Error", message="Invalid input. Please try again.")
+    return
+
 def modEmployee():
+
+    for w in employeesFrame.winfo_children():
+        w.destroy()
+
+    eselectLabel = Label(employeesFrame,text="Select Employee: ")
+    global modESelectBox
+    mVal = ""
+    modESelectBox = Combobox(employeesFrame, width = 30, textvariable = mVal)
+    eselectLabel.grid(row=0,column=0,sticky=E,padx=5,pady=10)
+    modESelectBox.grid(row=0,column=1,sticky=E+W,padx=5,pady=10)
+
+    mycursor.execute("SELECT EmployeeID FROM Employee")
+    result = mycursor.fetchall()
+
+    modESelectBox['values'] = tuple(result)
+    modESelectBox['state'] = 'readonly'
+
+    # ID
+    idLabel = Label(employeesFrame,text="Set EmployeeID: ")
+    global modidBox
+    id = ""
+    modidBox = Entry(employeesFrame, width = 30, textvariable = id)
+    idLabel.grid(row=1,column=0,sticky=E,padx=5,pady=10)
+    modidBox.grid(row=1,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Name
+    nameLabel = Label(employeesFrame,text="Set Name: ")
+    global modnameBox
+    name = ""
+    modnameBox = Entry(employeesFrame, width = 30, textvariable = name)
+    nameLabel.grid(row=2,column=0,sticky=E,padx=5,pady=10)
+    modnameBox.grid(row=2,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Address
+    addressLabel = Label(employeesFrame,text="Set Address: ")
+    global modaddressBox
+    address = ""
+    modaddressBox = Entry(employeesFrame, width = 30, textvariable = address)
+    addressLabel.grid(row=3,column=0,sticky=E,padx=5,pady=10)
+    modaddressBox.grid(row=3,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Email
+    emailLabel = Label(employeesFrame,text="Set Email: ")
+    global modemailBox
+    email = ""
+    modemailBox = Entry(employeesFrame, width = 30, textvariable = email)
+    emailLabel.grid(row=4,column=0,sticky=E,padx=5,pady=10)
+    modemailBox.grid(row=4,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Phone
+    phoneLabel = Label(employeesFrame,text="Set Phone: ")
+    global modphoneBox
+    phone = ""
+    modphoneBox = Entry(employeesFrame, width = 30, textvariable = phone)
+    phoneLabel.grid(row=5,column=0,sticky=E,padx=5,pady=10)
+    modphoneBox.grid(row=5,column=1,sticky=E+W,padx=5,pady=10)
+
+    modButton = Button(employeesFrame, text="Update", command=modClick)
+    modButton.grid(row=6,columnspan=2)
+
+    doneButton = Button(employeesFrame, text="Done", command=doneClick)
+    doneButton.grid(row=7,columnspan=2)
 
     return
 
+
+def addClick():
+    eid = idBox.get()
+    name = nameBox.get()
+    address = addressBox.get()
+    email = emailBox.get()
+    phone = phoneBox.get()
+    date = dateBox.get()
+    role = roleBox.get()
+    #store = storeBox.get()
+
+    try:
+        mycursor.execute("INSERT INTO Employee \
+                VALUES ('"+eid+"', '"+name+"', '"+address+"', '"+email+"', '"+phone+"', '"+date+"')")
+        
+        if (role == 'Receptionist'):
+                mycursor.execute("INSERT INTO Receptionist VALUES ("+eid+")")
+        elif (role == 'Entertainer'):
+                mycursor.execute("INSERT INTO Entertainer VALUES ("+eid+")")
+        elif (role == 'Zookeeper'):
+                mycursor.execute("INSERT INTO Zookeeper VALUES ("+eid+")")
+        elif (role == 'Manager'):
+                mycursor.execute("INSERT INTO Manager VALUES ("+eid+")")
+        elif (role == 'Store Employee'):
+                mycursor.execute("INSERT INTO Other_employee VALUES ("+eid+", 'NULL')")
+    except:
+        showerror(title="Error",message="Invalid input. Please try again.")
+    return
+
 def addEmployee():
+
+    for w in employeesFrame.winfo_children():
+        w.destroy()
+
+    # ID
+    idLabel = Label(employeesFrame,text="EmployeeID: ")
+    global idBox
+    id = ""
+    idBox = Entry(employeesFrame, width = 30, textvariable = id)
+    idLabel.grid(row=1,column=0,sticky=E,padx=5,pady=10)
+    idBox.grid(row=1,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Name
+    nameLabel = Label(employeesFrame,text="Name: ")
+    global nameBox
+    name = ""
+    nameBox = Entry(employeesFrame, width = 30, textvariable = name)
+    nameLabel.grid(row=2,column=0,sticky=E,padx=5,pady=10)
+    nameBox.grid(row=2,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Address
+    addressLabel = Label(employeesFrame,text="Address: ")
+    global addressBox
+    address = ""
+    addressBox = Entry(employeesFrame, width = 30, textvariable = address)
+    addressLabel.grid(row=3,column=0,sticky=E,padx=5,pady=10)
+    addressBox.grid(row=3,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Email
+    emailLabel = Label(employeesFrame,text="Email: ")
+    global emailBox
+    email = ""
+    emailBox = Entry(employeesFrame, width = 30, textvariable = email)
+    emailLabel.grid(row=4,column=0,sticky=E,padx=5,pady=10)
+    emailBox.grid(row=4,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Phone
+    phoneLabel = Label(employeesFrame,text="Phone: ")
+    global phoneBox
+    phone = ""
+    phoneBox = Entry(employeesFrame, width = 30, textvariable = phone)
+    phoneLabel.grid(row=5,column=0,sticky=E,padx=5,pady=10)
+    phoneBox.grid(row=5,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Start date
+    dateLabel = Label(employeesFrame,text="Start Date (yyyy-mm-dd): ")
+    global dateBox
+    date = ""
+    dateBox = Entry(employeesFrame, width = 30, textvariable = date)
+    dateLabel.grid(row=6,column=0,sticky=E,padx=5,pady=10)
+    dateBox.grid(row=6,column=1,sticky=E+W,padx=5,pady=10)
+
+    # Role:
+    roleLabel = Label(employeesFrame,text="Role: ")
+    global roleBox
+    role = ""
+    roleBox = Combobox(employeesFrame, width = 30, textvariable = role)
+    roleBox['values'] = ('Receptionist', 'Entertainer', 'Zookeeper', 'Manager', 'Store Employee')
+    roleBox['state'] = 'readonly'
+    roleLabel.grid(row=7,column=0,sticky=E,padx=5,pady=10)
+    roleBox.grid(row=7,column=1,sticky=E+W,padx=5,pady=10)
+
+    '''
+    # Store
+    storeLabel = Label(employeesFrame,text="Store (If store employee): ")
+    global storeBox
+    store = ""
+    storeBox = Combobox(employeesFrame, width = 30, textvariable = role)
+    mycursor.execute("SELECT Store_name FROM Store")
+    sNames = []
+    for i in mycursor.fetchall():
+        sNames.append(i[0])
+    storeBox['values'] = sNames
+    storeBox['state'] = 'readonly'
+    storeLabel.grid(row=8,column=0,sticky=E,padx=5,pady=10)
+    storeBox.grid(row=8,column=1,sticky=E+W,padx=5,pady=10)
+    '''
+
+    addButton = Button(employeesFrame, text="Add", command=addClick)
+    addButton.grid(row=9,columnspan=2)
+
+    doneButton = Button(employeesFrame, text="Done", command=doneClick)
+    doneButton.grid(row=10, columnspan=2)
+
 
     return
 
@@ -231,5 +465,7 @@ def set_employees_frame(sFrame, mid):
     startdateLabel = Label(employeesFrame, text="Start Date: ")
     startdateLabel.grid(column = 1, row = 7, pady=20, sticky=N+S+E+W)
 
+    '''
     global previousEmployee #Tracks whether a zookeeper or manager was previously selected
     previousEmployee = ""
+    '''
