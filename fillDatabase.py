@@ -67,9 +67,10 @@ mycursor.execute("INSERT INTO Manager \
                 ('12345')")
 
 mycursor.execute("INSERT INTO Store \
-                VALUES ('Safari Eatery', 'Restaurant', '45678'), \
-                ('Jungle Fun', 'Souvenir Shop', '45678'), \
-                ('Coming Soon', NULL, '45678')")
+                VALUES ('Safari Eatery', 'Restaurant'), \
+                ('Jungle Fun', 'Souvenir Shop'), \
+                ('The Iceberg', 'Ice Cream Cart'), \
+                ('Coming Soon', NULL)")
 
 mycursor.execute("INSERT INTO Daily_revenue \
                 VALUES ('2022-11-29', 1024.98, 'Jungle Fun'), \
@@ -91,8 +92,6 @@ mycursor.execute("INSERT INTO Daily_revenue \
                 ('2022-11-28', 1304.99, 'Safari Eatery'), \
                 ('2022-11-27', 1192.54, 'Safari Eatery'), \
                 ('2022-11-26', 1478.81, 'Safari Eatery'), \
-                ('2022-11-27', 1503.50, 'Safari Eatery'), \
-                ('2022-11-26', 1294.46, 'Safari Eatery'), \
                 ('2022-11-25', 1372.60, 'Safari Eatery'), \
                 ('2022-11-24', 1265.57, 'Safari Eatery'), \
                 ('2022-11-23', 1119.13, 'Safari Eatery'), \

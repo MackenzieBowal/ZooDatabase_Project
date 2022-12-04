@@ -48,7 +48,7 @@ def handle_storeemployee_page(window,eid,mFrame):
     storeemployeeNotebook.add(storesFrame, text='Stores')
     
     set_home_frame(homeFrame,eid)
-    stores.set_stores_frame(storesFrame)
+    stores.set_stores_frame(storesFrame, False)
 
 def set_home_frame(hFrame,eid):
     global homePage
