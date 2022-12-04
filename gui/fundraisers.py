@@ -23,9 +23,81 @@ def show_fundraiser(event):
         result = "N/A"
     themeLabel.config(text="Theme: " + result)
 
-def set_fundraisers_frame(sFrame):
+    return
+
+
+def doneClick():
+    for w in fundraisersFrame.winfo_children():
+        w.destroy()
+    
+    set_fundraisers_frame(savedFFrame, True)
+    return
+
+def delFundraiser():
+
+    for w in fundraisersFrame.winfo_children():
+        w.destroy()
+
+
+    mytext = Label(fundraisersFrame, text="yay it worked")
+    mytext.grid(row=1, column=1, sticky=N+S+E+W)
+
+    doneButton = Button(fundraisersFrame, text="Done", command=doneClick)
+    doneButton.grid(row=2, column=1)
+
+
+    return
+
+def modFundraiser(event):
+
+    for w in fundraisersFrame.winfo_children():
+        w.destroy()
+
+
+    mytext = Label(fundraisersFrame, text="yay it worked")
+    mytext.grid(row=1, column=1, sticky=N+S+E+W)
+
+    doneButton = Button(fundraisersFrame, text="Done", command=doneClick)
+    doneButton.grid(row=2, column=1)
+
+
+    return
+
+
+def addFundraiser(event):
+
+    for w in fundraisersFrame.winfo_children():
+        w.destroy()
+
+
+    mytext = Label(fundraisersFrame, text="yay it worked")
+    mytext.grid(row=1, column=1, sticky=N+S+E+W)
+
+    doneButton = Button(fundraisersFrame, text="Done", command=doneClick)
+    doneButton.grid(row=2, column=1)
+
+
+    
+    return
+
+
+def set_fundraisers_frame(sFrame, e):
     global fundraisersFrame
+    global savedFFrame
     fundraisersFrame = sFrame
+    savedFFrame = sFrame
+
+    global editable
+    editable = e
+
+    if editable:
+        delB = Button(fundraisersFrame,text="Delete Fundraiser",command=delFundraiser)
+        delB.grid(column = 0, row = 0, padx=5, pady=5, sticky=N+W)
+        modB = Button(fundraisersFrame,text="Modify Fundraiser",command=modFundraiser)
+        modB.grid(column = 0, row = 1, padx=5, pady=5, sticky=N+W)
+        addB = Button(fundraisersFrame,text="Add Fundraiser",command=addFundraiser)
+        addB.grid(column = 0, row = 2, padx=5, pady=5, sticky=N+W)
+
 
     text = Label(fundraisersFrame, text="Browse fundraisers")
     text.grid(column = 1, row = 0, sticky=S, ipadx=300, ipady=20)

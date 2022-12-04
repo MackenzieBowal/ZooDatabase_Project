@@ -71,7 +71,7 @@ def handle_manager_page(window,eid,mFrame):
     enclosures.set_enclosures_frame(enclosuresFrame)
     complexes.set_complexes_frame(complexesFrame)
     stores.set_stores_frame(storesFrame)
-    fundraisers.set_fundraisers_frame(fundraisersFrame)
+    fundraisers.set_fundraisers_frame(fundraisersFrame, True)
     donors.set_donors_frame(donorsFrame, False)
 
 def set_home_frame(hFrame,eid):
