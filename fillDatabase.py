@@ -6,6 +6,7 @@ mydb = mysql.connector.connect(
     user = "root",
     password = "password",
     database = "zoodatabase",
+    auth_plugin='mysql_native_password',
     autocommit = True
 )
 
@@ -51,6 +52,13 @@ mycursor.execute("INSERT INTO Employee \
                 'debradavis@gmail.com', '4032398596', '2022-04-26'), \
                 ('56789', 'Ed Edwards', '5 Fifth Street', \
                 'ededed@gmail.com', '4032665740', '2021-03-15')")
+
+mycursor.execute("INSERT INTO Emp_signin \
+                VALUES ('12345', 'password1'), \
+                ('23456', 'password2'), \
+                ('34567', 'password3'), \
+                ('45678', 'password4'), \
+                ('56789', 'password5')")
 
 mycursor.execute("INSERT INTO Manager \
                 VALUES ('45678')")

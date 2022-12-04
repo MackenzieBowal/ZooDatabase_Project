@@ -24,12 +24,21 @@ def clear_fields():
     passwordBox.delete(0, 'end')
     empTypeBox.current(0)
 
-def handle_signin_page(w):
+def backClicked():
+    signinPage.destroy()
+    backFrame.place(relwidth=1,relheight=1)
+
+def handle_signin_page(w, b):
     global window
     window = w
 
+    global backFrame
+    backFrame = b
+
     global signinPage
     signinPage = Frame(window)
+
+    backButton = Button(signinPage, text="Back", command=backClicked)
 
     signinMessage = Label(signinPage,text="Please sign in to access the system.")
     signinMessage.grid(row=0,column=0,columnspan=2,sticky=N+S+W+E,padx=5,pady=10)
@@ -76,7 +85,9 @@ def signin():
     eid = employeeidBox.get()
     pwd = passwordBox.get()
     etype = empTypeBox.get()
-    if (eid,pwd) not in employees:
+    mycursor.execute("SELECT * FROM Emp_signin")
+    result = mycursor.fetchall()
+    if (eid,pwd) not in result:
         showerror(title="Error",message="Invalid username/password combination, or incorrect employee type. Please try again.")
     elif etype == "Store Employee":
         mycursor.execute("SELECT * FROM Other_employee WHERE EmployeeID = %s"%eid)
