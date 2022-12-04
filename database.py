@@ -227,8 +227,8 @@ mycursor.execute("CREATE TABLE Overlooks \
                 (Manager_EID VARCHAR(5) NOT NULL, \
                 FundraiserID CHAR(5) NOT NULL, \
                 CONSTRAINT pk_Overlooks PRIMARY KEY (Manager_EID, FundraiserID), \
-                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID) ON DELETE CASCADE, \
-                FOREIGN KEY (Manager_EID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE)")
+                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID) ON DELETE CASCADE ON UPDATE CASCADE, \
+                FOREIGN KEY (Manager_EID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE ON UPDATE CASCADE)")
 
 mycursor.execute("CREATE TABLE Donor \
                 (DonorID CHAR(6) NOT NULL, \
@@ -245,8 +245,8 @@ mycursor.execute("CREATE TABLE Donates_to \
                 Amount FLOAT NOT NULL, \
                 Date DATE NOT NULL, \
                 CONSTRAINT pk_DonatesTo PRIMARY KEY (DonorID, FundraiserID), \
-                FOREIGN KEY (DonorID) REFERENCES Donor(DonorID) ON DELETE CASCADE, \
-                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID) ON DELETE CASCADE)")
+                FOREIGN KEY (DonorID) REFERENCES Donor(DonorID) ON DELETE CASCADE ON UPDATE CASCADE, \
+                FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID) ON DELETE CASCADE ON UPDATE CASCADE)")
 
 mycursor.execute("CREATE TABLE Emp_signin \
                 (EmpID CHAR(5) NOT NULL, \

@@ -9,7 +9,8 @@ mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "password",
-    database = "zoodatabase"
+    database = "zoodatabase",
+    autocommit = True
 )
 
 mycursor = mydb.cursor()
@@ -31,7 +32,7 @@ def doneClick():
     for w in fundraisersFrame.winfo_children():
         w.destroy()
     
-    set_fundraisers_frame(savedFFrame, True)
+    set_fundraisers_frame(savedFFrame, managerID, True)
     return
 
 def deleteClick():
@@ -55,7 +56,7 @@ def delFundraiser():
     fselectButton = Button(fundraisersFrame, text="Delete", command=deleteClick)
     fselectButton.grid(row=1,column=2,stick=W)
 
-    mycursor.execute("SELECT FundraiserID FROM Fundraiser")
+    mycursor.execute("SELECT FundraiserID FROM Overlooks WHERE Manager_EID="+managerID)
     result = mycursor.fetchall()
 
     fselectBox['values'] = result
@@ -73,17 +74,18 @@ def modClick():
     # Keep original values the same if not modified
     if newFID == '':
         newFID = originalFID
+
     newFTheme = modFthemeBox.get()
     if newFTheme == '':
         mycursor.execute("SELECT Theme FROM Fundraiser WHERE FundraiserID="+originalFID)
         newFTheme = str(mycursor.fetchall()[0][0])
 
-    try:
-        mycursor.execute("DELETE FROM Fundraiser WHERE FundraiserID=" + originalFID)
-        mycursor.execute("INSERT INTO Fundraiser \
-                VALUES ("+newFID+", '"+newFTheme+"')")
-    except:
-        showerror(title="Error",message="Invalid FundraiserID or Theme. Please try again.")
+
+    mycursor.execute("UPDATE Fundraiser SET \
+                FundraiserID='"+newFID+"', Theme='"+newFTheme+"' WHERE FundraiserID=" + originalFID)
+        #mycursor.execute("UPDATE Overlooks SET FundraiserID="+newFID+" WHERE FundraiserID="+originalFID)
+    #except:
+    #    showerror(title="Error", message="Invalid FundraiserID or Theme. Please try again.")
     return
 
 def modFundraiser():
@@ -99,7 +101,7 @@ def modFundraiser():
     fselectLabel.grid(row=0,column=0,sticky=E,padx=5,pady=10)
     modFSelectBox.grid(row=0,column=1,sticky=E+W,padx=5,pady=10)
 
-    mycursor.execute("SELECT FundraiserID FROM Fundraiser")
+    mycursor.execute("SELECT FundraiserID FROM Overlooks WHERE Manager_EID="+managerID)
     result = mycursor.fetchall()
 
     modFSelectBox['values'] = result
@@ -133,6 +135,8 @@ def addClick():
     try:
         mycursor.execute("INSERT INTO Fundraiser \
                 VALUES ("+fid+", '"+ftheme+"')")
+        mycursor.execute("INSERT INTO Overlooks \
+                VALUES ("+managerID+", "+fid+")")
     except:
         showerror(title="Error",message="Invalid FundraiserID or Theme. Please try again.")
     return
@@ -165,11 +169,14 @@ def addFundraiser():
     return
 
 
-def set_fundraisers_frame(sFrame, e):
+def set_fundraisers_frame(sFrame, mID, e):
     global fundraisersFrame
     global savedFFrame
     fundraisersFrame = sFrame
     savedFFrame = sFrame
+
+    global managerID
+    managerID = str(mID)
 
     global editable
     editable = e
@@ -190,7 +197,7 @@ def set_fundraisers_frame(sFrame, e):
     fundraiserSelection = Combobox(fundraisersFrame, width = 30, textvariable = currValue)
     fundraiserSelection.grid(column = 1, row = 1, padx=300, pady=20, sticky=N+S+E+W)
 
-    mycursor.execute("SELECT FundraiserID FROM Fundraiser")
+    mycursor.execute("SELECT FundraiserID FROM Overlooks WHERE Manager_EID="+managerID)
     result = mycursor.fetchall()
 
     fundraiserSelection['values'] = result

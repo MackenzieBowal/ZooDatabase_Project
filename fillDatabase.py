@@ -147,7 +147,7 @@ mycursor.execute("INSERT INTO Fundraiser \
 mycursor.execute("INSERT INTO Overlooks \
                 VALUES ('45678', '26930'), \
                 ('45678', '59104'), \
-                ('45678', '07183')")
+                ('12345', '07183')")
 
 mycursor.execute("INSERT INTO Donor \
                 VALUES ('392058', 'Ernie Paulson', '34 Donorly Street', \
