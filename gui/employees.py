@@ -133,9 +133,67 @@ def show_other(employee):
         previousroleLabel.destroy()
         overlooksLabel.destroy()
 
-def set_employees_frame(sFrame):
+#################################################
+
+def doneClick():
+    for w in employeesFrame.winfo_children():
+        w.destroy()
+    set_employees_frame(employeesFrame, managerID)
+    return
+
+def deleteClick():
+    delValue = eselectBox.get()
+    mycursor.execute("DELETE FROM Employee WHERE EmployeeID=" + delValue)
+    return
+
+def delEmployee():
+    # Refresh the page
+    for w in employeesFrame.winfo_children():
+        w.destroy()
+
+    # create delete page
+    eselectLabel = Label(employeesFrame,text="Select Employee: ")
+    global eselectBox
+    delValue = ""
+    eselectBox = Combobox(employeesFrame, width = 30, textvariable = delValue)
+    eselectLabel.grid(row=1,column=0,sticky=E,padx=5,pady=10)
+    eselectBox.grid(row=1,column=1,sticky=E+W,padx=5,pady=10)
+    fselectButton = Button(employeesFrame, text="Delete", command=deleteClick)
+    fselectButton.grid(row=1,column=2,stick=W)
+
+    mycursor.execute("SELECT EmployeeID FROM Employee")
+    result = mycursor.fetchall()
+
+    eselectBox['values'] = result
+    eselectBox['state'] = 'readonly'
+
+    doneButton = Button(employeesFrame, text="Done", command=doneClick)
+    doneButton.grid(row=2, columnspan=3)
+
+    return
+
+def modEmployee():
+
+    return
+
+def addEmployee():
+
+    return
+
+#################################################
+
+def set_employees_frame(sFrame, mid):
     global employeesFrame
     employeesFrame = sFrame
+    global managerID
+    managerID = str(mid)
+
+    delB = Button(employeesFrame,text="Delete an Employee",command=delEmployee)
+    delB.grid(column = 0, row = 0, padx=5, pady=5, sticky=N+W)
+    modB = Button(employeesFrame,text="Modify an Employee",command=modEmployee)
+    modB.grid(column = 0, row = 1, padx=5, pady=5, sticky=N+W)
+    addB = Button(employeesFrame,text="Add an Employee",command=addEmployee)
+    addB.grid(column = 0, row = 2, padx=5, pady=5, sticky=N+W)
 
     text = Label(employeesFrame, text="Browse employees")
     text.grid(column = 1, row = 0, sticky=S, ipadx=300, ipady=20)
@@ -161,17 +219,17 @@ def set_employees_frame(sFrame):
     global startdateLabel
 
     employeeLabel = Label(employeesFrame, text="Employee ID: None selected")
-    employeeLabel.grid(column = 0, row = 2, pady=20, sticky=S+E+W)
+    employeeLabel.grid(column = 1, row = 2, pady=20, sticky=S+E+W)
     nameLabel = Label(employeesFrame, text="Name: ")
-    nameLabel.grid(column = 0, row = 3, pady=20, sticky=N+S+E+W)
+    nameLabel.grid(column = 1, row = 3, pady=20, sticky=N+S+E+W)
     addressLabel = Label(employeesFrame, text="Address: ")
-    addressLabel.grid(column = 0, row = 4, pady=20, sticky=N+S+E+W)
+    addressLabel.grid(column = 1, row = 4, pady=20, sticky=N+S+E+W)
     emailLabel = Label(employeesFrame, text="Email: ")
-    emailLabel.grid(column = 0, row = 5, pady=20, sticky=N+S+E+W)
+    emailLabel.grid(column = 1, row = 5, pady=20, sticky=N+S+E+W)
     phoneLabel = Label(employeesFrame, text="Phone: ")
-    phoneLabel.grid(column = 0, row = 6, pady=20, sticky=N+S+E+W)
+    phoneLabel.grid(column = 1, row = 6, pady=20, sticky=N+S+E+W)
     startdateLabel = Label(employeesFrame, text="Start Date: ")
-    startdateLabel.grid(column = 0, row = 7, pady=20, sticky=N+S+E+W)
+    startdateLabel.grid(column = 1, row = 7, pady=20, sticky=N+S+E+W)
 
     global previousEmployee #Tracks whether a zookeeper or manager was previously selected
     previousEmployee = ""

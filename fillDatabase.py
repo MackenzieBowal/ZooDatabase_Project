@@ -63,7 +63,8 @@ mycursor.execute("INSERT INTO Emp_signin \
                 ('56789', 'password5')")
 
 mycursor.execute("INSERT INTO Manager \
-                VALUES ('45678')")
+                VALUES ('45678'), \
+                ('12345')")
 
 mycursor.execute("INSERT INTO Store \
                 VALUES ('Safari Eatery', 'Restaurant', '45678'), \
