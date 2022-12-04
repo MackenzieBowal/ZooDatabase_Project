@@ -233,9 +233,10 @@ mycursor.execute("CREATE TABLE Overlooks \
 mycursor.execute("CREATE TABLE Donor \
                 (DonorID CHAR(6) NOT NULL, \
                 Name VARCHAR(15), \
-                Address VARCHAR(15), \
+                Address VARCHAR(30), \
                 Email VARCHAR(20), \
                 Phone_number CHAR(10), \
+                Amount_donated INT, \
                 PRIMARY KEY (DonorID))")
 
 mycursor.execute("CREATE TABLE Donates_to \
