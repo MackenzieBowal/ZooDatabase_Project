@@ -1,5 +1,6 @@
 from ctypes import alignment
 from tkinter import *
+from tkinter.messagebox import showerror
 from tkinter.ttk import Combobox
 import mysql.connector
 
@@ -34,15 +35,11 @@ def doneClick():
     return
 
 def deleteClick():
-
     delValue = fselectBox.get()
-
     mycursor.execute("DELETE FROM Fundraiser WHERE FundraiserID=" + delValue)
-
     return
 
 def delFundraiser():
-
     # Refresh the page
     for w in fundraisersFrame.winfo_children():
         w.destroy()
@@ -50,7 +47,6 @@ def delFundraiser():
     # create delete page
     fname = StringVar()
     fselectLabel = Label(fundraisersFrame,text="Select Fundraiser: ")
-    global fselectBox
     global fselectBox
     delValue = ""
     fselectBox = Combobox(fundraisersFrame, width = 30, textvariable = delValue)
@@ -68,38 +64,103 @@ def delFundraiser():
     doneButton = Button(fundraisersFrame, text="Done", command=doneClick)
     doneButton.grid(row=2, columnspan=3)
 
-
     return
 
-def modFundraiser(event):
+def modClick():
+    originalFID = modFSelectBox.get()
+    newFID = modFidBox.get()
+
+    # Keep original values the same if not modified
+    if newFID == '':
+        newFID = originalFID
+    newFTheme = modFthemeBox.get()
+    if newFTheme == '':
+        mycursor.execute("SELECT Theme FROM Fundraiser WHERE FundraiserID="+originalFID)
+        newFTheme = str(mycursor.fetchall()[0][0])
+
+    try:
+        mycursor.execute("DELETE FROM Fundraiser WHERE FundraiserID=" + originalFID)
+        mycursor.execute("INSERT INTO Fundraiser \
+                VALUES ("+newFID+", '"+newFTheme+"')")
+    except:
+        showerror(title="Error",message="Invalid FundraiserID or Theme. Please try again.")
+    return
+
+def modFundraiser():
 
     for w in fundraisersFrame.winfo_children():
         w.destroy()
 
+    fname = StringVar()
+    fselectLabel = Label(fundraisersFrame,text="Select Fundraiser: ")
+    global modFSelectBox
+    delValue = ""
+    modFSelectBox = Combobox(fundraisersFrame, width = 30, textvariable = delValue)
+    fselectLabel.grid(row=0,column=0,sticky=E,padx=5,pady=10)
+    modFSelectBox.grid(row=0,column=1,sticky=E+W,padx=5,pady=10)
 
-    mytext = Label(fundraisersFrame, text="yay it worked")
-    mytext.grid(row=1, column=1, sticky=N+S+E+W)
+    mycursor.execute("SELECT FundraiserID FROM Fundraiser")
+    result = mycursor.fetchall()
+
+    modFSelectBox['values'] = result
+    modFSelectBox['state'] = 'readonly'
+
+    fidLabel = Label(fundraisersFrame,text="Set FundraiserID: ")
+    global modFidBox
+    fid = ""
+    modFidBox = Entry(fundraisersFrame, width = 30, textvariable = fid)
+    fidLabel.grid(row=1,column=0,sticky=E,padx=5,pady=10)
+    modFidBox.grid(row=1,column=1,sticky=E+W,padx=5,pady=10)
+
+    fthemeLabel = Label(fundraisersFrame,text="Set Theme: ")
+    global modFthemeBox
+    ftheme = ""
+    modFthemeBox = Entry(fundraisersFrame, width = 30, textvariable = ftheme)
+    fthemeLabel.grid(row=2,column=0,sticky=E,padx=5,pady=10)
+    modFthemeBox.grid(row=2,column=1,sticky=E+W,padx=5,pady=10)
+
+    modButton = Button(fundraisersFrame, text="Update", command=modClick)
+    modButton.grid(row=3,column=1)
 
     doneButton = Button(fundraisersFrame, text="Done", command=doneClick)
-    doneButton.grid(row=2, column=1)
-
+    doneButton.grid(row=4,column=1)
 
     return
 
+def addClick():
+    fid = fidBox.get()
+    ftheme = fthemeBox.get()
+    try:
+        mycursor.execute("INSERT INTO Fundraiser \
+                VALUES ("+fid+", '"+ftheme+"')")
+    except:
+        showerror(title="Error",message="Invalid FundraiserID or Theme. Please try again.")
+    return
 
-def addFundraiser(event):
+def addFundraiser():
 
     for w in fundraisersFrame.winfo_children():
         w.destroy()
 
+    fidLabel = Label(fundraisersFrame,text="FundraiserID: ")
+    global fidBox
+    fid = ""
+    fidBox = Entry(fundraisersFrame, width = 30, textvariable = fid)
+    fidLabel.grid(row=1,column=0,sticky=E,padx=5,pady=10)
+    fidBox.grid(row=1,column=1,sticky=E+W,padx=5,pady=10)
 
-    mytext = Label(fundraisersFrame, text="yay it worked")
-    mytext.grid(row=1, column=1, sticky=N+S+E+W)
+    fthemeLabel = Label(fundraisersFrame,text="Theme: ")
+    global fthemeBox
+    ftheme = ""
+    fthemeBox = Entry(fundraisersFrame, width = 30, textvariable = ftheme)
+    fthemeLabel.grid(row=2,column=0,sticky=E,padx=5,pady=10)
+    fthemeBox.grid(row=2,column=1,sticky=E+W,padx=5,pady=10)
+
+    addButton = Button(fundraisersFrame, text="Add", command=addClick)
+    addButton.grid(row=3,columnspan=2)
 
     doneButton = Button(fundraisersFrame, text="Done", command=doneClick)
-    doneButton.grid(row=2, column=1)
-
-
+    doneButton.grid(row=4, columnspan=2)
 
     return
 
@@ -114,11 +175,11 @@ def set_fundraisers_frame(sFrame, e):
     editable = e
 
     if editable:
-        delB = Button(fundraisersFrame,text="Delete Fundraiser",command=delFundraiser)
+        delB = Button(fundraisersFrame,text="Delete a Fundraiser",command=delFundraiser)
         delB.grid(column = 0, row = 0, padx=5, pady=5, sticky=N+W)
-        modB = Button(fundraisersFrame,text="Modify Fundraiser",command=modFundraiser)
+        modB = Button(fundraisersFrame,text="Modify a Fundraiser",command=modFundraiser)
         modB.grid(column = 0, row = 1, padx=5, pady=5, sticky=N+W)
-        addB = Button(fundraisersFrame,text="Add Fundraiser",command=addFundraiser)
+        addB = Button(fundraisersFrame,text="Add a Fundraiser",command=addFundraiser)
         addB.grid(column = 0, row = 2, padx=5, pady=5, sticky=N+W)
 
 
