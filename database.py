@@ -68,6 +68,11 @@ mycursor.execute("CREATE TABLE Enclosure \
                 PRIMARY KEY (EnclosureID), \
                 FOREIGN KEY (ComplexID) REFERENCES Indoor_complex(ComplexID) ON DELETE CASCADE ON UPDATE CASCADE)")
 
+mycursor.execute("CREATE TABLE Store \
+                (Store_name VARCHAR(20) NOT NULL, \
+                Type VARCHAR(20), \
+                PRIMARY KEY (Store_name))")
+
 mycursor.execute("CREATE TABLE Exhibit \
                 (ExhibitID CHAR(7) NOT NULL, \
                 Theme CHAR(20) NOT NULL, \
@@ -109,13 +114,6 @@ mycursor.execute("CREATE TABLE Manager \
                 PRIMARY KEY (EmployeeID), \
                 FOREIGN KEY (EmployeeID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE ON UPDATE CASCADE)")
 
-mycursor.execute("CREATE TABLE Store \
-                (Store_name VARCHAR(15) NOT NULL, \
-                Type VARCHAR(15), \
-                Manager_EID CHAR(5) NOT NULL, \
-                PRIMARY KEY (Store_name), \
-                FOREIGN KEY (Manager_EID) REFERENCES Manager(EmployeeID) ON DELETE CASCADE ON UPDATE CASCADE)")
-
 mycursor.execute("CREATE TABLE Vaccine_recd \
                 (Vaccine_name VARCHAR(15) NOT NULL, \
                 Date DATE NOT NULL, \
@@ -140,7 +138,7 @@ mycursor.execute("CREATE TABLE Daily_revenue \
                 (Date DATE NOT NULL, \
                 Revenue FLOAT NOT NULL, \
                 Store_name VARCHAR(15) NOT NULL, \
-                CONSTRAINT pk_DailyRevenue PRIMARY KEY (Date, Revenue, Store_name), \
+                CONSTRAINT pk_DailyRevenue PRIMARY KEY (Date, Store_name), \
                 FOREIGN KEY (Store_name) REFERENCES Store(Store_name) ON DELETE CASCADE ON UPDATE CASCADE)")
 
 mycursor.execute("CREATE TABLE Inventory_item \
@@ -240,6 +238,12 @@ mycursor.execute("CREATE TABLE Donor \
                 Amount_donated INT, \
                 PRIMARY KEY (DonorID))")
 
+mycursor.execute("CREATE TABLE Emp_signin \
+                (EmpID CHAR(5) NOT NULL, \
+                Password CHAR(10) NOT NULL, \
+                CONSTRAINT pk_EmpSignin PRIMARY KEY (EmpID, Password), \
+                FOREIGN KEY (EmpID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE ON UPDATE CASCADE)")
+
 mycursor.execute("CREATE TABLE Donates_to \
                 (DonorID CHAR(6) NOT NULL, \
                 FundraiserID CHAR(5) NOT NULL, \
@@ -249,8 +253,3 @@ mycursor.execute("CREATE TABLE Donates_to \
                 FOREIGN KEY (DonorID) REFERENCES Donor(DonorID) ON DELETE CASCADE ON UPDATE CASCADE, \
                 FOREIGN KEY (FundraiserID) REFERENCES Fundraiser(FundraiserID) ON DELETE CASCADE ON UPDATE CASCADE)")
 
-mycursor.execute("CREATE TABLE Emp_signin \
-                (EmpID CHAR(5) NOT NULL, \
-                Password CHAR(10) NOT NULL, \
-                CONSTRAINT pk_EmpSignin PRIMARY KEY (EmpID, Password), \
-                FOREIGN KEY (EmpID) REFERENCES Employee(EmployeeID) ON DELETE CASCADE ON UPDATE CASCADE)")
