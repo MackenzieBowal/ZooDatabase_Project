@@ -39,9 +39,10 @@ def handle_signin_page(w, b):
     signinPage = Frame(window)
 
     backButton = Button(signinPage, text="Back", command=backClicked)
+    backButton.grid(row=0,column=0,sticky=N+W,columnspan=2,padx=20,pady=0)
 
     signinMessage = Label(signinPage,text="Please sign in to access the system.")
-    signinMessage.grid(row=0,column=0,columnspan=2,sticky=N+S+W+E,padx=5,pady=10)
+    signinMessage.grid(row=0,column=0,columnspan=2,sticky=N+S+W+E,padx=5,pady=30)
 
     employeeid = StringVar()
     employeeidLabel = Label(signinPage,text="EmployeeID")
