@@ -72,7 +72,7 @@ def handle_manager_page(window,eid,mFrame):
     complexes.set_complexes_frame(complexesFrame)
     stores.set_stores_frame(storesFrame)
     fundraisers.set_fundraisers_frame(fundraisersFrame)
-    donors.set_donors_frame(donorsFrame)
+    donors.set_donors_frame(donorsFrame, False)
 
 def set_home_frame(hFrame,eid):
     global homePage
