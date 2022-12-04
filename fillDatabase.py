@@ -13,9 +13,11 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 
 mycursor.execute("INSERT INTO Species \
-                VALUES ('Lion', 'Feline', 'Savannah', 12), \
-                ('Buffalo', 'Bovine', 'Plains', 25), \
-                ('Platypus', 'Weird', 'Small Creeks', 7)")
+                VALUES ('Lion', 'Feline', 'Savannah', 12, 'Carnivore'), \
+                ('Buffalo', 'Bovine', 'Plains', 25, 'Herbivore'), \
+                ('Platypus', 'Monotreme', 'Small Creeks', 7, 'Carnivore'), \
+                ('Black Bear', 'Ursid', 'Boreal Forest', 15, 'Omnivore'), \
+                ('Hyacinth Macaw', 'Parrot', 'Rainforest', 85, 'Herbivore')")
 
 mycursor.execute("INSERT INTO Indoor_complex \
                 VALUES ('1', 5426, 'Zoo Boulevard'), \

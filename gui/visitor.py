@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter.ttk import Notebook
-import sharedFrames
+import species
 
 def backClicked():
     visitorPage.destroy()
@@ -38,5 +38,6 @@ def handleVisitorPage(window, bFrame):
     visitorNotebook.add(frame2, text='Enclosures')
     visitorNotebook.add(speciesFrame, text='Species')
 
-    sharedFrames.setSpeciesFrame(speciesFrame)
+    species.setSpeciesFrame(speciesFrame)
+    
 

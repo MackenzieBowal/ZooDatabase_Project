@@ -1,22 +1,44 @@
 from ctypes import alignment
 from tkinter import *
 from tkinter.ttk import Combobox
+import mysql.connector
 
-speciesData = [["Lion", "Feline", "Savannah", "12 years", "Diet"], 
-                ["Buffalo", "Bovine", "Plains", "25 years", "Diet"], 
-                ["Platypus", "Weird", "Small Creeks", "7 years", "Diet"]]
+# Create a connection to the database
+mydb = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "password",
+    database = "zoodatabase"
+)
+
+mycursor = mydb.cursor()
+
 
 def showSpecies(event):
     spec = speciesSelection.get()
 
-    # Replace this with querying the database
-    for i in range(len(speciesData)):
-        if (speciesData[i][0] == spec):
-            spLabel.config(text="Species: " + spec)
-            catLabel.config(text="Category: " + speciesData[i][1])
-            habLabel.config(text="Habitat: " + speciesData[i][2])
-            lifeLabel.config(text="Lifespan: " + speciesData[i][3])
-            dietLabel.config(text="Diet: " + speciesData[i][4])
+    spLabel.config(text="Species: "+ spec)
+
+    mycursor.execute("SELECT Category FROM Species WHERE Species_name = '%s'"%spec)
+    result = str(mycursor.fetchall()[0][0])
+    if result == "None":
+        result = "N/A"
+    catLabel.config(text="Category: " + result)
+
+    mycursor.execute("SELECT Habitat FROM Species WHERE Species_name = '%s'"%spec)
+    result = str(mycursor.fetchall()[0][0])
+    if result == "None":
+        result = "N/A"
+    habLabel.config(text="Habitat: " + result)
+
+    mycursor.execute("SELECT Lifespan FROM Species WHERE Species_name = '%s'"%spec)
+    result = str(mycursor.fetchall()[0][0])
+    lifeLabel.config(text="Lifespan: " + result)
+
+    mycursor.execute("SELECT Diet FROM Species WHERE Species_name = '%s'"%spec)
+    result = str(mycursor.fetchall()[0][0])
+    dietLabel.config(text="Diet: " + result)
+
     return
 
 def setSpeciesFrame(sFrame):
@@ -30,15 +52,11 @@ def setSpeciesFrame(sFrame):
     currValue = StringVar()
     speciesSelection = Combobox(speciesFrame, width = 30, textvariable = currValue)
     speciesSelection.grid(column = 1, row = 1, padx=300, pady=20, sticky=N+S+E+W)
-
-    # This will be replaced by querying the database
-    sNames = []
-    for i in range(len(speciesData)):
-        sNames.append(speciesData[i][0])
     
-    speciesNames = tuple(sNames)
+    mycursor.execute("SELECT Species_name FROM Species")
+    result = mycursor.fetchall()
 
-    speciesSelection['values'] = speciesNames
+    speciesSelection['values'] = result
     speciesSelection['state'] = 'readonly'
 
     speciesSelection.bind('<<ComboboxSelected>>', showSpecies)
