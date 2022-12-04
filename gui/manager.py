@@ -68,7 +68,7 @@ def handle_manager_page(window,eid,mFrame):
     
     set_home_frame(homeFrame,eid)
     employees.set_employees_frame(employeesFrame, eid)
-    exhibits.set_exhibits_frame(exhibitsFrame)
+    exhibits.set_exhibits_frame(exhibitsFrame, True)
     enclosures.set_enclosures_frame(enclosuresFrame)
     complexes.set_complexes_frame(complexesFrame)
     stores.set_stores_frame(storesFrame)

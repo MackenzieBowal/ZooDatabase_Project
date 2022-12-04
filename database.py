@@ -70,6 +70,7 @@ mycursor.execute("CREATE TABLE Enclosure \
 
 mycursor.execute("CREATE TABLE Exhibit \
                 (ExhibitID CHAR(7) NOT NULL, \
+                Theme CHAR(20) NOT NULL, \
                 Start_date DATE NOT NULL, \
                 End_date DATE NOT NULL, \
                 PRIMARY KEY (ExhibitID))")

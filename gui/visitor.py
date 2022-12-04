@@ -45,6 +45,6 @@ def handleVisitorPage(window, bFrame):
     visitorNotebook.add(donorFrame, text='Donors')
 
     enclosures.set_enclosures_frame(enclosuresFrame)
-    exhibits.set_exhibits_frame(exhibitsFrame)
+    exhibits.set_exhibits_frame(exhibitsFrame, False)
     species.setSpeciesFrame(speciesFrame)
     donors.set_donors_frame(donorFrame, True)

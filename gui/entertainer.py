@@ -48,7 +48,7 @@ def handle_entertainer_page(window,eid,mFrame):
     entertainerNotebook.add(exhibitsFrame, text='Exhibits')
     
     set_home_frame(homeFrame,eid)
-    exhibits.set_exhibits_frame(exhibitsFrame)
+    exhibits.set_exhibits_frame(exhibitsFrame, False)
 
 def set_home_frame(hFrame,eid):
     global homePage
