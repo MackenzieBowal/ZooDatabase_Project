@@ -19,7 +19,7 @@ def handleVisitorPage(window, bFrame):
 
     backButton = Button(visitorPage, text="Back", command=backClicked)
     visitorNotebook = Notebook(visitorPage)
-    visitorNotebook.pack(expand=True)
+    visitorNotebook.grid(row=1,column=0)
     backButton.grid(row=0,column=0,columnspan=2,sticky=N+W,padx=5)
     visitorNotebook.grid(row=1,column=0)
 
