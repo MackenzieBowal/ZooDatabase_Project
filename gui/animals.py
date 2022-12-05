@@ -107,15 +107,17 @@ def modClick():
         newex = str(mycursor.fetchall()[0][0])
 
     # Update table
-    #try:
-    if newex == 'None':
-        mycursor.execute("UPDATE Animal SET \
-                Name='"+newid+"', EnclosureID='"+newenc+"', ExhibitID='0000000' WHERE `Name`='"+originalid+"'")
-    else:
-        mycursor.execute("UPDATE Animal SET \
-                Name='"+newid+"', EnclosureID='"+newenc+"', ExhibitID='"+newex+"' WHERE `Name`='"+originalid+"'")
-    #except:
-    #    showerror(title="Error", message="Invalid input. Please try again.")
+    try:
+        if newex == 'None':
+            sql_update_query = """UPDATE Animal SET Name=%s, EnclosureID=%s, ExhibitID='0000000' WHERE `Name`=%s"""
+            data_tuple = (newid, newenc, originalid)
+            mycursor.execute(sql_update_query, data_tuple)
+        else:
+            sql_update_query = """UPDATE Animal SET Name=%s, EnclosureID=%s, ExhibitID=%s WHERE `Name`=%s"""
+            data_tuple = (newid, newenc, newex, originalid)
+            mycursor.execute(sql_update_query, data_tuple)
+    except:
+        showerror(title="Error", message="Invalid input. Please try again.")
     return
 
 def modAnimal():
@@ -182,8 +184,9 @@ def addClick():
         enc = "0000000"
 
     try:
-        mycursor.execute("INSERT INTO Animal \
-            VALUES ('"+eid+"', '"+bdate+"', '"+sex+"', '"+species+"', '"+enc+"', NULL)")
+        sql_insert_query = """INSERT INTO Animal VALUES (%s, %s, %s, %s, %s, NULL)"""
+        data_tuple = (eid, bdate, sex, species, enc)
+        mycursor.execute(sql_insert_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return

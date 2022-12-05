@@ -101,14 +101,6 @@ mycursor.execute("CREATE TABLE Employee \
                 Start_date DATE, \
                 PRIMARY KEY (EmployeeID))")
 
-'''
-mycursor.execute("CREATE TABLE Species_diet \
-                (Diet VARCHAR(15) NOT NULL, \
-                Species_name VARCHAR(15) NOT NULL, \
-                CONSTRAINT pk_SpeciesDiet PRIMARY KEY (Diet, Species_name), \
-                FOREIGN KEY (Species_name) REFERENCES Species(Species_name) ON DELETE CASCADE ON UPDATE CASCADE)")
-'''
-
 mycursor.execute("CREATE TABLE Manager \
                 (EmployeeID CHAR(5) NOT NULL, \
                 PRIMARY KEY (EmployeeID), \

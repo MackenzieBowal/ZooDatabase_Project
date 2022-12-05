@@ -143,7 +143,7 @@ def modEnclosure():
         w.destroy()
 
 
-    # create delete page
+    # create modification page
     eselectLabel = Label(enclosuresFrame,text="Select Enclosure: ")
     global modEselectBox
     delValue = ""

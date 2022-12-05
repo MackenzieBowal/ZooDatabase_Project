@@ -30,10 +30,10 @@ mycursor.execute("INSERT INTO Enclosure \
                 ('350586', 28, 'Savannah', 50, 40, NULL, NULL)")
 
 mycursor.execute("INSERT INTO Exhibit \
-                VALUES ('8675309', 'History', '2022-11-18', '2022-12-18'), \
-                ('0951287', 'Nocturnal', '2022-03-08', '2022-03-31'), \
+                VALUES ('1111111', 'History', '2022-11-18', '2022-12-18'), \
+                ('2222222', 'Nocturnal', '2022-03-08', '2022-03-31'), \
                 ('3863048', 'Polar', '2013-05-16', '2013-07-24'), \
-                ('8324767', 'Birds', '2022-12-01', '2023-01-05'), \
+                ('3333333', 'Birds', '2022-12-01', '2023-01-05'), \
                 ('9672122', 'Africa', '2022-11-29', '2022-12-10'), \
                 ('5432235', 'Freshwater', '2016-08-15', '2016-09-15'), \
                 ('6823527', 'Asia', '2019-12-02', '2020-03-14'), \
@@ -105,11 +105,6 @@ mycursor.execute("INSERT INTO Daily_revenue \
 mycursor.execute("INSERT INTO Zookeeper \
                 VALUES ('34567')")
 
-'''
-mycursor.execute("INSERT INTO Zookeeper_specialization \
-                VALUES ('Big Cats', '34567')")
-'''
-
 mycursor.execute("INSERT INTO Entertainer \
                 VALUES ('23456')")
 
@@ -133,10 +128,6 @@ mycursor.execute("INSERT INTO Cares_for \
                 VALUES ('34567', 'Lion'), \
                 ('34567', 'Buffalo'), \
                 ('34567', 'Platypus')")
-
-mycursor.execute("INSERT INTO Manager_previousrole \
-                VALUES ('Receptionist', '45678'), \
-                ('Zookeeper', '45678')")
 
 mycursor.execute("INSERT INTO Ticket \
                 VALUES ('47628197', '920475018'), \
