@@ -8,9 +8,7 @@ def visitorClick():
     handleVisitorPage(window, welcomePage)
 
 def signin_click():
-    #handle_signin_page(window, welcomePage)
-
-    handle_manager_page(window,45678,welcomePage)
+    handle_signin_page(window, welcomePage)
 
 def mainMenu():
     welcomePage.place(relwidth=1,relheight=1)
