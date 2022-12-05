@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
     autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def show_complex(event):
     indoorcomplex = complexSelection.get()
@@ -76,18 +76,19 @@ def modClick():
 
     newaddnum = modaddressBox.get()
     if newaddnum == '':
-        mycursor.execute("SELECT Address_nbr FROM Complex WHERE ComplexID="+originalid)
+        mycursor.execute("SELECT Address_nbr FROM Indoor_complex WHERE ComplexID="+originalid)
         newaddnum = str(mycursor.fetchall()[0][0])
 
     newst = modstBox.get()
     if newst == '':
-        mycursor.execute("SELECT Street_name FROM Complex WHERE ComplexID="+originalid)
+        mycursor.execute("SELECT Street_name FROM Indoor_complex WHERE ComplexID="+originalid)
         newst = str(mycursor.fetchall()[0][0])
 
     # Update table
     try:
-        mycursor.execute("UPDATE Indoor_complex SET \
-                ComplexID='"+newid+"', Address_nbr='"+newaddnum+"', Street_name='"+newst+"' WHERE ComplexID=" + originalid)
+        sql_update_query = """UPDATE Indoor_complex SET ComplexID=%s, Address_nbr=%s, Street_name=%s WHERE ComplexID=%s"""
+        data_tuple = (newid,newaddnum,newst,originalid)
+        mycursor.execute(sql_update_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return
@@ -149,8 +150,9 @@ def addClick():
     stName = stBox.get()
 
     try:
-        mycursor.execute("INSERT INTO Indoor_complex \
-                VALUES ('"+eid+"', '"+addNum+"', '"+stName+"')")
+        sql_insert_query = """INSERT INTO Indoor_complex VALUES (%s, %s, %s)"""
+        data_tuple = (eid,addNum,stName)
+        mycursor.execute(sql_insert_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return

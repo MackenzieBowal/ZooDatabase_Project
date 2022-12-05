@@ -14,10 +14,11 @@ mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "password",
-    database = "zoodatabase"
+    database = "zoodatabase",
+    autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def clear_fields():
     employeeidBox.delete(0, 'end')
@@ -90,16 +91,45 @@ def signin():
     result = mycursor.fetchall()
     if (eid,pwd) not in result:
         showerror(title="Error",message="Invalid username/password combination, or incorrect employee type. Please try again.")
-    elif etype == "Store Employee":
-        mycursor.execute("SELECT * FROM Other_employee WHERE EmployeeID = %s"%eid)
+    elif etype == "Receptionist":
+        sql_select_query = """SELECT * FROM Receptionist WHERE EmployeeID = %s"""
+        mycursor.execute(sql_select_query, (eid,))
         result = mycursor.fetchall()
         if len(result) == 0:
             showerror(title="Error",message="Invalid username/password combination, or incorrect employee type. Please try again.")
         else:
             clear_fields()
             goto_employee(etype,eid)
-    else: #etype != "Store Employee"
-        mycursor.execute("SELECT * FROM %s WHERE EmployeeID = %s"%(etype,eid))
+    elif etype == "Entertainer":
+        sql_select_query = """SELECT * FROM Entertainer WHERE EmployeeID = %s"""
+        mycursor.execute(sql_select_query, (eid,))
+        result = mycursor.fetchall()
+        if len(result) == 0:
+            showerror(title="Error",message="Invalid username/password combination, or incorrect employee type. Please try again.")
+        else:
+            clear_fields()
+            goto_employee(etype,eid)
+    elif etype == "Zookeeper":
+        sql_select_query = """SELECT * FROM Zookeeper WHERE EmployeeID = %s"""
+        mycursor.execute(sql_select_query, (eid,))
+        result = mycursor.fetchall()
+        if len(result) == 0:
+            showerror(title="Error",message="Invalid username/password combination, or incorrect employee type. Please try again.")
+        else:
+            clear_fields()
+            goto_employee(etype,eid)
+    elif etype == "Manager":
+        sql_select_query = """SELECT * FROM Manager WHERE EmployeeID = %s"""
+        mycursor.execute(sql_select_query, (eid,))
+        result = mycursor.fetchall()
+        if len(result) == 0:
+            showerror(title="Error",message="Invalid username/password combination, or incorrect employee type. Please try again.")
+        else:
+            clear_fields()
+            goto_employee(etype,eid)
+    else: #etype == "Store Employee"
+        sql_select_query = """SELECT * FROM Other_employee WHERE EmployeeID = %s"""
+        mycursor.execute(sql_select_query, (eid,))
         result = mycursor.fetchall()
         if len(result) == 0:
             showerror(title="Error",message="Invalid username/password combination, or incorrect employee type. Please try again.")

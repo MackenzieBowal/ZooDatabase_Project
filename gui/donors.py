@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
     autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def show_donor(event):
     donor = donorSelection.get()
@@ -122,17 +122,19 @@ def modClick():
         mycursor.execute("SELECT Address FROM Donor WHERE DonorID="+originalid)
         newaddress = str(mycursor.fetchall()[0][0])
 
-    newamt = int(modamtBox.get())
-    if newaddress == '':
+    newamt = modamtBox.get()
+    if newamt == '':
         newamt = 0
+    else:
+        newamt = int(newamt)
     mycursor.execute("SELECT Amount_donated FROM Donor WHERE DonorID="+originalid)
     newamt = newamt + int(mycursor.fetchall()[0][0])
 
     # Update table
     try:
-        mycursor.execute("UPDATE Donor SET \
-                DonorID='"+newid+"', Name='"+newname+"', Phone_number='"+newphone+"', \
-                Email='"+newemail+"', Address='"+newaddress+"', Amount_donated="+str(newamt)+" WHERE DonorID=" + originalid)
+        sql_update_query = """UPDATE Donor SET DonorID=%s, Name=%s, Phone_number=%s, Email=%s, Address=%s, Amount_donated=%s WHERE DonorID=%s"""
+        data_tuple = (newid,newname,newphone,newemail,newaddress,newamt,originalid)
+        mycursor.execute(sql_update_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return
@@ -220,8 +222,9 @@ def addClick():
     amt = amtBox.get()
 
     try:
-        mycursor.execute("INSERT INTO Donor \
-            VALUES ('"+eid+"', '"+name+"', '"+address+"', '"+email+"', '"+phone+"', '"+amt+"')")
+        sql_insert_query = """INSERT INTO Donor VALUES (%s, %s, %s, %s, %s, %s)"""
+        data_tuple = (eid,name,address,email,phone,amt)
+        mycursor.execute(sql_insert_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return

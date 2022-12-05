@@ -10,10 +10,11 @@ mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "password",
-    database = "zoodatabase"
+    database = "zoodatabase",
+    autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def show_store(event):
     store = storeSelection.get()
@@ -101,14 +102,12 @@ def modClick():
         for x in result:
             store = x[0]
             newtype = store
-    
-    print(newtype)
-    print(newid)
 
     # Update table
     try:
-        mycursor.execute("UPDATE Store SET \
-            Store_name='"+newid+"', Type='"+newtype+"' WHERE Store_name='" + originalid+"'")
+        sql_update_query = """UPDATE Store SET Store_name=%s, Type=%s WHERE Store_name=%s"""
+        data_tuple = (newid,newtype,originalid)
+        mycursor.execute(sql_update_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid Name or Type input. Please try again.")
 
@@ -118,11 +117,14 @@ def modClick():
     if newdate != '' and newrev != '':
 
         try:
-            mycursor.execute("INSERT INTO Daily_revenue VALUES ('"+newdate+"', '"+newrev+"', '"+newid+"')")
+            mysql_insert_query = """INSERT INTO Daily_revenue VALUES (%s, %s, %s)"""
+            data_tuple = (newdate,newrev,newid)
+            mycursor.execute(mysql_insert_query, data_tuple)
         except:
             try:
-                mycursor.execute("UPDATE Daily_revenue SET Date='"+newdate+"', Store_name='"+newid+"', Revenue='"+newrev+"' \
-                    WHERE Date='"+newdate+"' AND Store_name='"+newid+"'")
+                mysql_update_query = """UPDATE Daily_revenue SET Date=%s, Store_name=%s, Revenue=%s WHERE Date=%s AND Store_name=%s"""
+                data_tuple = (newdate,newid,newrev,newdate,newid)
+                mycursor.execute(mysql_update_query, data_tuple)
             except:
                 showerror(title="Error", message="Invalid Revenue Information input. Please try again.")
 
@@ -193,11 +195,12 @@ def modStore():
 
 def addClick():
     eid = idBox.get()
-    type = typeBox.get()
+    storeType = typeBox.get()
 
     try:
-        mycursor.execute("INSERT INTO Store \
-                VALUES ('"+eid+"', '"+type+"')")
+        mysql_insert_query = """INSERT INTO Store VALUES (%s, %s)"""
+        data_tuple = (eid,storeType)
+        mycursor.execute(mysql_insert_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return
@@ -217,8 +220,8 @@ def addStore():
     # Addr Number
     typeLabel = Label(storesFrame,text="Type: ")
     global typeBox
-    type = ""
-    typeBox = Entry(storesFrame, width = 30, textvariable = type)
+    storeType = ""
+    typeBox = Entry(storesFrame, width = 30, textvariable = storeType)
     typeLabel.grid(row=2,column=0,sticky=E,padx=5,pady=10)
     typeBox.grid(row=2,column=1,sticky=E+W,padx=5,pady=10)
 
