@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
     autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def show_enclosure(event):
     enclosure = enclosureSelection.get()
@@ -131,9 +131,9 @@ def modClick():
 
     # Update table
     try:
-        mycursor.execute("UPDATE Enclosure SET \
-                EnclosureID='"+newid+"', Temperature='"+newtemp+"', Habitat='"+newhab+"', \
-                Length='"+newlen+"', Width='"+newwid+"', Height='"+newheight+"', ComplexID='"+newcomp+"' WHERE EnclosureID=" + originalid)
+        sql_update_query = """UPDATE Enclosure SET EnclosureID=%s, Temperature=%s, Habitat=%s, Length=%s, Width=%s, Height=%s, ComplexID=%s WHERE EnclosureID=%s"""
+        data_tuple = (newid,newtemp,newhab,newlen,newwid,newheight,newcomp,originalid)
+        mycursor.execute(sql_update_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return
@@ -233,9 +233,9 @@ def addClick():
     comp = compBox.get()
 
     try:
-        mycursor.execute("INSERT INTO Enclosure \
-                VALUES ('"+eid+"', '"+temp+"', '"+hab+"', \
-                '"+length+"', '"+width+"', '"+height+"', '"+comp+"')")
+        sql_insert_query = """INSERT INTO Enclosure VALUES (%s, %s, %s, %s, %s, %s, %s)"""
+        data_tuple = (eid,temp,hab,length,width,height,comp)
+        mycursor.execute(sql_insert_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return

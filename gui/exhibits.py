@@ -9,10 +9,11 @@ mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "password",
-    database = "zoodatabase"
+    database = "zoodatabase",
+    autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def show_exhibit(event):
     exhibit = exhibitSelection.get()
@@ -94,9 +95,9 @@ def modClick():
 
     # Update table
     try:
-        mycursor.execute("UPDATE Exhibit SET \
-                ExhibitID='"+newid+"', Theme='"+newtheme+"', Start_date='"+newstart+"', \
-                End_date='"+newend+"' WHERE ExhibitID=" + originalid)
+        sql_update_query = """UPDATE Exhibit SET ExhibitID=%s, Theme=%s, Start_date=%s, End_date=%s WHERE ExhibitID=%s"""
+        data_tuple = (newid,newtheme,newstart,newend,originalid)
+        mycursor.execute(sql_update_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return
@@ -167,8 +168,9 @@ def addClick():
     end = endBox.get()
 
     try:
-        mycursor.execute("INSERT INTO Exhibit \
-                VALUES ('"+eid+"', '"+theme+"', '"+start+"', '"+end+"')")
+        sql_insert_query = """INSERT INTO Exhibit VALUES (%s, %s, %s, %s)"""
+        data_tuple = (eid,theme,start,end)
+        mycursor.execute(sql_insert_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return

@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
     autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def show_employee(event):
 
@@ -120,9 +120,9 @@ def modClick():
 
     # Update table
     try:
-        mycursor.execute("UPDATE Employee SET \
-                EmployeeID='"+newid+"', Name='"+newname+"', Phone_number='"+newphone+"', \
-                Email='"+newemail+"', Address='"+newaddress+"' WHERE EmployeeID=" + originalid)
+        sql_update_query = """UPDATE Employee SET EmployeeID=%s, Name=%s, Phone_number=%s, Email=%s, Address=%s WHERE EmployeeID=%s"""
+        data_tuple = (newid,newname,newphone,newemail,newaddress,originalid)
+        mycursor.execute(sql_update_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return
@@ -204,8 +204,9 @@ def addClick():
     role = roleBox.get()
 
     try:
-        mycursor.execute("INSERT INTO Employee \
-                VALUES ('"+eid+"', '"+name+"', '"+address+"', '"+email+"', '"+phone+"', '"+date+"')")
+        sql_insert_query = """INSERT INTO Employee VALUES (%s, %s, %s, %s, %s, %s)"""
+        data_tuple = (eid,name,address,email,phone,date)
+        mycursor.execute(sql_insert_query, data_tuple)
         
         if (role == 'Receptionist'):
                 mycursor.execute("INSERT INTO Receptionist VALUES ("+eid+")")

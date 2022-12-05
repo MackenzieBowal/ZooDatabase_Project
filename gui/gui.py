@@ -2,15 +2,11 @@ from tkinter import *
 from visitor import handleVisitorPage
 from signin import handle_signin_page
 
-from zookeeper import handle_zookeeper_page
-
 def visitorClick():
     handleVisitorPage(window, welcomePage)
 
 def signin_click():
-    #handle_signin_page(window, welcomePage)
-
-    handle_zookeeper_page(window,34567,welcomePage)
+    handle_signin_page(window, welcomePage)
 
 def mainMenu():
     welcomePage.place(relwidth=1,relheight=1)

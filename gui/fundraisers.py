@@ -13,7 +13,7 @@ mydb = mysql.connector.connect(
     autocommit = True
 )
 
-mycursor = mydb.cursor()
+mycursor = mydb.cursor(prepared=True)
 
 def show_fundraiser(event):
     fundraiser = fundraiserSelection.get()
@@ -80,8 +80,9 @@ def modClick():
         newFTheme = str(mycursor.fetchall()[0][0])
 
     try:
-        mycursor.execute("UPDATE Fundraiser SET \
-                FundraiserID='"+newFID+"', Theme='"+newFTheme+"' WHERE FundraiserID=" + originalFID)
+        sql_update_query = """UPDATE Fundraiser SET FundraiserID=%s, Theme=%s WHERE FundraiserID=%s"""
+        data_tuple = (newFID,newFTheme,originalFID)
+        mycursor.execute(sql_update_query, data_tuple)
     except:
         showerror(title="Error", message="Invalid FundraiserID or Theme. Please try again.")
     return
@@ -131,10 +132,12 @@ def addClick():
     fid = fidBox.get()
     ftheme = fthemeBox.get()
     try:
-        mycursor.execute("INSERT INTO Fundraiser \
-                VALUES ("+fid+", '"+ftheme+"')")
-        mycursor.execute("INSERT INTO Overlooks \
-                VALUES ("+managerID+", "+fid+")")
+        sql_insert_query = """INSERT INTO Fundraiser VALUES (%s, %s)"""
+        data_tuple = (fid,ftheme)
+        mycursor.execute(sql_insert_query, data_tuple)
+        sql_insert_query = """INSERT INTO Overlooks VALUES (%s, %s)"""
+        data_tuple = (managerID,fid)
+        mycursor.execute(sql_insert_query, data_tuple)
     except:
         showerror(title="Error",message="Invalid FundraiserID or Theme. Please try again.")
     return
