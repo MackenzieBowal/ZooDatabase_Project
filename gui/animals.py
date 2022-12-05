@@ -107,17 +107,17 @@ def modClick():
         newex = str(mycursor.fetchall()[0][0])
 
     # Update table
-    #try:
-    if newex == 'None':
-        sql_update_query = """UPDATE Animal SET Name=%s, EnclosureID=%s, ExhibitID='0000000' WHERE `Name`=%s"""
-        data_tuple = (newid, newenc, originalid)
-        mycursor.execute(sql_update_query, data_tuple)
-    else:
-        sql_update_query = """UPDATE Animal SET Name=%s, EnclosureID=%s, ExhibitID=%s WHERE `Name`=%s"""
-        data_tuple = (newid, newenc, newex, originalid)
-        mycursor.execute(sql_update_query, data_tuple)
-    #except:
-    #    showerror(title="Error", message="Invalid input. Please try again.")
+    try:
+        if newex == 'None':
+            sql_update_query = """UPDATE Animal SET Name=%s, EnclosureID=%s, ExhibitID='0000000' WHERE `Name`=%s"""
+            data_tuple = (newid, newenc, originalid)
+            mycursor.execute(sql_update_query, data_tuple)
+        else:
+            sql_update_query = """UPDATE Animal SET Name=%s, EnclosureID=%s, ExhibitID=%s WHERE `Name`=%s"""
+            data_tuple = (newid, newenc, newex, originalid)
+            mycursor.execute(sql_update_query, data_tuple)
+    except:
+        showerror(title="Error", message="Invalid input. Please try again.")
     return
 
 def modAnimal():
