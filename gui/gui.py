@@ -2,7 +2,7 @@ from tkinter import *
 from visitor import handleVisitorPage
 from signin import handle_signin_page
 
-from receptionist import handle_receptionist_page
+from zookeeper import handle_zookeeper_page
 
 def visitorClick():
     handleVisitorPage(window, welcomePage)
@@ -10,7 +10,7 @@ def visitorClick():
 def signin_click():
     #handle_signin_page(window, welcomePage)
 
-    handle_receptionist_page(window,12345,welcomePage)
+    handle_zookeeper_page(window,34567,welcomePage)
 
 def mainMenu():
     welcomePage.place(relwidth=1,relheight=1)
