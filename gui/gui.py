@@ -2,8 +2,6 @@ from tkinter import *
 from visitor import handleVisitorPage
 from signin import handle_signin_page
 
-from manager import handle_manager_page
-
 def visitorClick():
     handleVisitorPage(window, welcomePage)
 
