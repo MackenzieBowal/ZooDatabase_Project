@@ -102,9 +102,6 @@ def modClick():
             store = x[0]
             newtype = store
     
-    print(newtype)
-    print(newid)
-
     # Update table
     try:
         mycursor.execute("UPDATE Store SET \

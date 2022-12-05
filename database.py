@@ -214,7 +214,7 @@ mycursor.execute("CREATE TABLE Manager_previousrole \
 mycursor.execute("CREATE TABLE Ticket \
                 (TicketID CHAR(8) NOT NULL, \
                 PassID CHAR(9) NOT NULL, \
-                PRIMARY KEY (TicketID), \
+                CONSTRAINT pk_Ticket PRIMARY KEY (TicketID, PassID), \
                 FOREIGN KEY (PassID) REFERENCES Pass(PassID) ON DELETE CASCADE ON UPDATE CASCADE)")
 
 mycursor.execute("CREATE TABLE Fundraiser \
