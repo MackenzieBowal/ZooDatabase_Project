@@ -104,8 +104,10 @@ mycursor.execute("INSERT INTO Daily_revenue \
 mycursor.execute("INSERT INTO Zookeeper \
                 VALUES ('34567')")
 
+'''
 mycursor.execute("INSERT INTO Zookeeper_specialization \
                 VALUES ('Big Cats', '34567')")
+'''
 
 mycursor.execute("INSERT INTO Entertainer \
                 VALUES ('23456')")
