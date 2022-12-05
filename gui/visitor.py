@@ -46,5 +46,5 @@ def handleVisitorPage(window, bFrame):
 
     enclosures.set_enclosures_frame(enclosuresFrame, False)
     exhibits.set_exhibits_frame(exhibitsFrame, False)
-    species.setSpeciesFrame(speciesFrame, False)
+    species.setSpeciesFrame(speciesFrame)
     donors.set_donors_frame(donorFrame, True)

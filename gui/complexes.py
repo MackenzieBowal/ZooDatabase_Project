@@ -31,7 +31,7 @@ def show_complex(event):
 def doneClick():
     for w in complexesFrame.winfo_children():
         w.destroy()
-    set_complexes_frame(complexesFrame, True)
+    set_complexes_frame(complexesFrame)
     return
 
 def deleteClick():
@@ -196,20 +196,16 @@ def addComplex():
 #################################################
 
 
-def set_complexes_frame(sFrame, e):
+def set_complexes_frame(sFrame):
     global complexesFrame
     complexesFrame = sFrame
 
-    global editable
-    editable = e
-
-    if editable:
-        delB = Button(complexesFrame,text="Delete a Complex",command=delComplex)
-        delB.grid(column = 0, row = 0, padx=5, pady=5, sticky=N+W)
-        modB = Button(complexesFrame,text="Modify a Complex",command=modComplex)
-        modB.grid(column = 0, row = 1, padx=5, pady=5, sticky=N+W)
-        addB = Button(complexesFrame,text="Add a Complex",command=addComplex)
-        addB.grid(column = 0, row = 2, padx=5, pady=5, sticky=N+W)
+    delB = Button(complexesFrame,text="Delete a Complex",command=delComplex)
+    delB.grid(column = 0, row = 0, padx=5, pady=5, sticky=N+W)
+    modB = Button(complexesFrame,text="Modify a Complex",command=modComplex)
+    modB.grid(column = 0, row = 1, padx=5, pady=5, sticky=N+W)
+    addB = Button(complexesFrame,text="Add a Complex",command=addComplex)
+    addB.grid(column = 0, row = 2, padx=5, pady=5, sticky=N+W)
 
     text = Label(complexesFrame, text="Browse complexes")
     text.grid(column = 1, row = 0, sticky=S, ipadx=300, ipady=20)

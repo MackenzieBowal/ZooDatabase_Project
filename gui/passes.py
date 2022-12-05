@@ -9,8 +9,7 @@ mydb = mysql.connector.connect(
     host = "localhost",
     user = "root",
     password = "password",
-    database = "zoodatabase",
-    autocommit = True
+    database = "zoodatabase"
 )
 
 mycursor = mydb.cursor()
