@@ -58,7 +58,7 @@ def doneClick():
 
 def deleteClick():
     delValue = cselectBox.get()
-    mycursor.execute("DELETE FROM Animal WHERE Name='" + delValue + "'")
+    mycursor.execute("DELETE FROM Animal WHERE Name='%s'", tuple(delValue))
     return
 
 def delAnimal():
@@ -98,24 +98,24 @@ def modClick():
 
     newenc = modeBox.get()
     if newenc == '':
-        mycursor.execute("SELECT EnclosureID FROM Animal WHERE `Name`='"+originalid+"'")
+        mycursor.execute("SELECT EnclosureID FROM Animal WHERE `Name`='%s'", (originalid,))
         newenc = str(mycursor.fetchall()[0][0])
 
     newex = modexBox.get()
     if newex == '':
-        mycursor.execute("SELECT ExhibitID FROM Animal WHERE `Name`='"+originalid+"'")
+        mycursor.execute("SELECT ExhibitID FROM Animal WHERE `Name`='%s'", (originalid,))
         newex = str(mycursor.fetchall()[0][0])
 
     # Update table
-    #try:
-    if newex == 'None':
-        mycursor.execute("UPDATE Animal SET \
-                Name='"+newid+"', EnclosureID='"+newenc+"', ExhibitID='0000000' WHERE `Name`='"+originalid+"'")
-    else:
-        mycursor.execute("UPDATE Animal SET \
-                Name='"+newid+"', EnclosureID='"+newenc+"', ExhibitID='"+newex+"' WHERE `Name`='"+originalid+"'")
-    #except:
-    #    showerror(title="Error", message="Invalid input. Please try again.")
+    try:
+        if newex == 'None':
+            mycursor.execute("UPDATE Animal SET \
+                    Name='%s', EnclosureID='%s', ExhibitID='0000000' WHERE `Name`='%s'", (newid, newenc, originalid))
+        else:
+            mycursor.execute("UPDATE Animal SET \
+                    Name='%s', EnclosureID='%s', ExhibitID='%s' WHERE `Name`='%s'", (newid, newenc, newex, originalid))
+    except:
+        showerror(title="Error", message="Invalid input. Please try again.")
     return
 
 def modAnimal():
@@ -183,7 +183,7 @@ def addClick():
 
     try:
         mycursor.execute("INSERT INTO Animal \
-            VALUES ('"+eid+"', '"+bdate+"', '"+sex+"', '"+species+"', '"+enc+"', NULL)")
+            VALUES ('%s', '%s', '%s', '%s', '%s', NULL)", (eid, bdate, sex, species, enc))
     except:
         showerror(title="Error", message="Invalid input. Please try again.")
     return

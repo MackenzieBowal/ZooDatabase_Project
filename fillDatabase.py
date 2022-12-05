@@ -105,11 +105,6 @@ mycursor.execute("INSERT INTO Daily_revenue \
 mycursor.execute("INSERT INTO Zookeeper \
                 VALUES ('34567')")
 
-'''
-mycursor.execute("INSERT INTO Zookeeper_specialization \
-                VALUES ('Big Cats', '34567')")
-'''
-
 mycursor.execute("INSERT INTO Entertainer \
                 VALUES ('23456')")
 
@@ -133,10 +128,6 @@ mycursor.execute("INSERT INTO Cares_for \
                 VALUES ('34567', 'Lion'), \
                 ('34567', 'Buffalo'), \
                 ('34567', 'Platypus')")
-
-mycursor.execute("INSERT INTO Manager_previousrole \
-                VALUES ('Receptionist', '45678'), \
-                ('Zookeeper', '45678')")
 
 mycursor.execute("INSERT INTO Ticket \
                 VALUES ('47628197', '920475018'), \
