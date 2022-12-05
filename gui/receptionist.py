@@ -54,7 +54,7 @@ def handle_receptionist_page(window,eid,mFrame):
     receptionistNotebook.add(enclosuresFrame, text='Enclosures')
     
     set_home_frame(homeFrame,eid)
-    passes.set_passes_frame(passesFrame)
+    passes.set_passes_frame(passesFrame, eid)
     exhibits.set_exhibits_frame(exhibitsFrame, False)
     enclosures.set_enclosures_frame(enclosuresFrame, False)
 
